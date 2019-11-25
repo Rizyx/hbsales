@@ -42,9 +42,6 @@ public class ProdutoService {
             throw new IllegalArgumentException("Nome da categoria não deve ser nula/vazia");
         }
 
-        if (StringUtils.isEmpty(produtoDTO.getFornecedor_categoria())) {
-            throw new IllegalArgumentException("Fornecedor da categoria não deve ser nulo/vazio");
-        }
     }
     public ProdutoDTO findById(Long id) {
         Optional<Produto> produtoOptional = this.iProdutoRepository.findById(id);

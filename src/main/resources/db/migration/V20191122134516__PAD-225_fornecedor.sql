@@ -1,6 +1,6 @@
 create table seg_fornecedores
 (
-    id    BIGINT  IDENTITY(1, 1)        NOT NULL,
+    id_fornecedor    BIGINT  IDENTITY(1, 1)        NOT NULL PRIMARY KEY,
     razao_social VARCHAR(100)           NOT NULL,
     cnpj  VARCHAR(30)         UNIQUE    NOT NULL,
     nome_fantasia  VARCHAR(150)         NOT NULL,
