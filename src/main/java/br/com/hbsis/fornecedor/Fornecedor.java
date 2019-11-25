@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_fornecedor;
     @Column(name = "Razao_Social", nullable = false, length = 100)
     private String Razao_Social;
     @Column(name = "CNPJ", unique = true, nullable = false, length = 30)
@@ -21,8 +21,8 @@ public class Fornecedor {
     @Column(name = "Email_contato", unique = true, length = 120)
     private String Email_contato;
 
-    public Long getId() {
-        return id;
+    public Long getId_fornecedor() {
+        return id_fornecedor;
     }
 
     public String getRazao_Social() {
@@ -76,7 +76,7 @@ public class Fornecedor {
     @Override
     public String toString() {
         return "Fornecedor{" +
-                "id=" + id +
+                "id=" + id_fornecedor +
                 ", Razao social='" + Razao_Social + '\'' +
                 ", CNPJ='" + CNPJ + '\'' +
                 ", Nome Fanstasia='" + Nome_Fantasia + '\'' +

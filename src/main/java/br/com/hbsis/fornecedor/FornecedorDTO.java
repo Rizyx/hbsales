@@ -1,7 +1,7 @@
 package br.com.hbsis.fornecedor;
 
 public class FornecedorDTO {
-    private long id;
+    private long id_fornecedor;
     private String Razao_social;
     private String CNPJ;
     private String Nome_fantasia;
@@ -15,9 +15,9 @@ public class FornecedorDTO {
         this.Razao_social = Razao_social;
         this.CNPJ = CNPJ;
     }
-    public FornecedorDTO(Long id, String Razao_social, String CNPJ, String Nome_fantasia, String Endereco,
+    public FornecedorDTO(Long id_fornecedor, String Razao_social, String CNPJ, String Nome_fantasia, String Endereco,
                             String Telefone_contato, String Email_contato) {
-        this.id = id;
+        this.id_fornecedor = id_fornecedor;
         this.Razao_social = Razao_social;
         this.CNPJ = CNPJ;
         this.Nome_fantasia = Nome_fantasia;
@@ -28,7 +28,7 @@ public class FornecedorDTO {
 
     public static FornecedorDTO of(Fornecedor fornecedor) {
         return new FornecedorDTO(
-                fornecedor.getId(),
+                fornecedor.getId_fornecedor(),
                 fornecedor.getRazao_Social(),
                 fornecedor.getCNPJ(),
                 fornecedor.getNome_Fantasia(),
@@ -38,8 +38,8 @@ public class FornecedorDTO {
         );
     }
 
-    public long getId(long id) {
-        return id;
+    public long getId(long id_fornecedor) {
+        return id_fornecedor;
     }
 
 
@@ -94,7 +94,7 @@ public class FornecedorDTO {
     @Override
     public String toString() {
         return "Fornecedor{" +
-                "id=" + id +
+                "id=" + id_fornecedor +
                 ", Razao social='" + Razao_social + '\'' +
                 ", CNPJ='" + CNPJ + '\'' +
                 ", Nome Fanstasia='" + Nome_fantasia + '\'' +

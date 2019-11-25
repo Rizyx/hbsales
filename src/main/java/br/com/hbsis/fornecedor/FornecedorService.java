@@ -54,23 +54,24 @@ public class FornecedorService {
         }
     }
 
-    public FornecedorDTO findById(Long id) {
-        Optional<Fornecedor> fornecedorOptional = this.iFornecedorRepository.findById(id);
+    public FornecedorDTO findById(Long id_fornecedor) {
+        Optional<Fornecedor> fornecedorOptional = this.iFornecedorRepository.findById(id_fornecedor);
 
         if (fornecedorOptional.isPresent()) {
             return FornecedorDTO.of(fornecedorOptional.get());
         }
 
-        throw new IllegalArgumentException(String.format("ID %s não existe", id));
+        throw new IllegalArgumentException(String.format("ID %s não existe", id_fornecedor));
     }
 
-    public FornecedorDTO update(FornecedorDTO fornecedorDTO, Long id) {
-        Optional<Fornecedor> fornecedorExistenteOptional = this.iFornecedorRepository.findById(id);
+
+    public FornecedorDTO update(FornecedorDTO fornecedorDTO, Long id_fornecedor) {
+        Optional<Fornecedor> fornecedorExistenteOptional = this.iFornecedorRepository.findById(id_fornecedor);
 
         if (fornecedorExistenteOptional.isPresent()) {
             Fornecedor fornecedorExistente = fornecedorExistenteOptional.get();
 
-            LOGGER.info("Atualizando fornecedor... id: [{}]", fornecedorExistente.getId());
+            LOGGER.info("Atualizando fornecedor... id: [{}]", fornecedorExistente.getId_fornecedor());
             LOGGER.debug("Payload: {}", fornecedorDTO);
             LOGGER.debug("Fornecedor Existente: {}", fornecedorExistente);
 
@@ -86,13 +87,13 @@ public class FornecedorService {
             return FornecedorDTO.of(fornecedorExistente);
         }
 
-        throw new IllegalArgumentException(String.format("ID %s não existe", id));
+        throw new IllegalArgumentException(String.format("ID %s não existe", id_fornecedor));
 
     }
 
-    public void delete(Long id) {
-        LOGGER.info("Executando delete para Fornecedor de ID: [{}]", id);
+    public void delete(Long id_fornecedor) {
+        LOGGER.info("Executando delete para Fornecedor de ID: [{}]", id_fornecedor);
 
-        this.iFornecedorRepository.deleteById(id);
+        this.iFornecedorRepository.deleteById(id_fornecedor);
     }
 }
