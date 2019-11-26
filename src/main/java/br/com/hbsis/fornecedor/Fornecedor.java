@@ -1,6 +1,9 @@
 package br.com.hbsis.fornecedor;
 
+import br.com.hbsis.categoriaProduto.CategoriaProduto;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "seg_fornecedores")
@@ -9,28 +12,31 @@ public class Fornecedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_fornecedor;
     @Column(name = "Razao_Social", nullable = false, length = 100)
-    private String Razao_Social;
+    private String razaoSocial;
     @Column(name = "CNPJ", unique = true, nullable = false, length = 30)
     private String CNPJ;
     @Column(name = "Nome_Fantasia", nullable = false, length = 150)
-    private String Nome_Fantasia;
+    private String nomeFantasia;
     @Column(name = "Endereco", unique = true, length = 200)
     private String Endereco;
     @Column(name = "Telefone_contato", unique = true, length = 20)
-    private String Telefone_contato;
+    private String telefoneContato;
     @Column(name = "Email_contato", unique = true, length = 120)
-    private String Email_contato;
+    private String emailContato;
+    @OneToMany(mappedBy="Fornecedor")
+    private Set<CategoriaProduto> categoriaProduto;
+
 
     public Long getId_fornecedor() {
         return id_fornecedor;
     }
 
-    public String getRazao_Social() {
-        return Razao_Social;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setRazao_Social(String razao_Social) {
-        this.Razao_Social = razao_Social;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getCNPJ() {
@@ -41,12 +47,12 @@ public class Fornecedor {
         this.CNPJ = CNPJ;
     }
 
-    public String getNome_Fantasia() {
-        return Nome_Fantasia;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setNome_Fantasia(String nome_Fantasia) {
-        this.Nome_Fantasia = nome_Fantasia;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getEndereco() {
@@ -57,32 +63,41 @@ public class Fornecedor {
         Endereco = endereco;
     }
 
-    public String getTelefone_contato() {
-        return Telefone_contato;
+    public String getTelefoneContato() {
+        return telefoneContato;
     }
 
-    public void setTelefone_contato(String telefone_contato) {
-        this.Telefone_contato = telefone_contato;
+    public void setTelefoneContato(String telefoneContato) {
+        this.telefoneContato = telefoneContato;
     }
 
-    public String getEmail_contato() {
-        return Email_contato;
+    public String getEmailContato() {
+        return emailContato;
     }
 
-    public void setEmail_contato(String email_contato) {
-        this.Email_contato = email_contato;
+    public void setEmailContato(String emailContato) {
+        this.emailContato = emailContato;
+    }
+
+    public Set<CategoriaProduto> getCategoriaProduto() {
+        return categoriaProduto;
+    }
+
+    public void setCategoriaProduto(Set<CategoriaProduto> categoriaProduto) {
+        this.categoriaProduto = categoriaProduto;
     }
 
     @Override
     public String toString() {
         return "Fornecedor{" +
                 "id=" + id_fornecedor +
-                ", Razao social='" + Razao_Social + '\'' +
+                ", Razao social='" + razaoSocial + '\'' +
                 ", CNPJ='" + CNPJ + '\'' +
-                ", Nome Fanstasia='" + Nome_Fantasia + '\'' +
+                ", Nome Fanstasia='" + nomeFantasia + '\'' +
                 ", Endereço='" + Endereco + '\'' +
-                ", Telefone de contato='" + Telefone_contato + '\'' +
-                ", E-mail de contato='" + Email_contato + '\'' +
+                ", Telefone de contato='" + telefoneContato + '\'' +
+                ", E-mail de contato='" + emailContato + '\'' +
+                ", Categoria de produto'" + categoriaProduto + '\'' +
                 '}';
     }
 }

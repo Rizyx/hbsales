@@ -26,12 +26,12 @@ public class FornecedorService {
         LOGGER.debug("Fornecedor: {}", fornecedorDTO);
 
         Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setRazao_Social(fornecedorDTO.getRazao_social());
+        fornecedor.setRazaoSocial(fornecedorDTO.getRazaoSocial());
         fornecedor.setCNPJ(fornecedorDTO.getCNPJ());
-        fornecedor.setNome_Fantasia(fornecedorDTO.getNome_fantasia());
+        fornecedor.setNomeFantasia(fornecedorDTO.getNomeFantasia());
         fornecedor.setEndereco(fornecedorDTO.getEndereco());
-        fornecedor.setTelefone_contato(fornecedorDTO.getTelefone_contato());
-        fornecedor.setEmail_contato(fornecedorDTO.getEmail_contato());
+        fornecedor.setTelefoneContato(fornecedorDTO.getTelefoneContato());
+        fornecedor.setEmailContato(fornecedorDTO.getEmailContato());
 
         fornecedor = this.iFornecedorRepository.save(fornecedor);
 
@@ -45,7 +45,7 @@ public class FornecedorService {
             throw new IllegalArgumentException("FornecedorDTO não deve ser nulo");
         }
 
-        if (StringUtils.isEmpty(fornecedorDTO.getRazao_social())) {
+        if (StringUtils.isEmpty(fornecedorDTO.getRazaoSocial())) {
             throw new IllegalArgumentException("Razão Social não deve ser nula/vazia");
         }
 
@@ -63,6 +63,16 @@ public class FornecedorService {
 
         throw new IllegalArgumentException(String.format("ID %s não existe", id_fornecedor));
     }
+    public Fornecedor findFornecedorById(long id_fornecedor) {
+        Optional<Fornecedor> fornecedorOptional = this.iFornecedorRepository.findById(id_fornecedor);
+
+
+        if (fornecedorOptional.isPresent()) {
+            return fornecedorOptional.get();
+        }
+
+        throw new IllegalArgumentException(String.format("ID %s não existe", id_fornecedor));
+    }
 
 
     public FornecedorDTO update(FornecedorDTO fornecedorDTO, Long id_fornecedor) {
@@ -75,12 +85,12 @@ public class FornecedorService {
             LOGGER.debug("Payload: {}", fornecedorDTO);
             LOGGER.debug("Fornecedor Existente: {}", fornecedorExistente);
 
-            fornecedorExistente.setRazao_Social(fornecedorDTO.getRazao_social());
+            fornecedorExistente.setRazaoSocial(fornecedorDTO.getRazaoSocial());
             fornecedorExistente.setCNPJ(fornecedorDTO.getCNPJ());
-            fornecedorExistente.setNome_Fantasia(fornecedorDTO.getNome_fantasia());
+            fornecedorExistente.setNomeFantasia(fornecedorDTO.getNomeFantasia());
             fornecedorExistente.setEndereco(fornecedorDTO.getEndereco());
-            fornecedorExistente.setTelefone_contato(fornecedorDTO.getTelefone_contato());
-            fornecedorExistente.setEmail_contato(fornecedorDTO.getEmail_contato());
+            fornecedorExistente.setTelefoneContato(fornecedorDTO.getTelefoneContato());
+            fornecedorExistente.setEmailContato(fornecedorDTO.getEmailContato());
 
             fornecedorExistente = this.iFornecedorRepository.save(fornecedorExistente);
 
