@@ -1,6 +1,7 @@
 package br.com.hbsis.categoriaProduto;
 
 import br.com.hbsis.fornecedor.Fornecedor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -18,8 +19,14 @@ public class CategoriaProduto {
     @JoinColumn(name="fornecedor_categoria", referencedColumnName = "id_fornecedor")
     private Fornecedor Fornecedor;
 
+    @Transient
+    private MultipartFile file;
+
     public CategoriaProduto() {
 
+    }
+
+    public CategoriaProduto(String codCategoria, String nomeCategoria,Fornecedor Fornecedor) {
     }
 
 
@@ -50,6 +57,15 @@ public class CategoriaProduto {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.Fornecedor = fornecedor;
+    }
+
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     @Override

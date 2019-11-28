@@ -26,6 +26,9 @@ public class Fornecedor {
     @OneToMany(mappedBy="Fornecedor")
     private Set<CategoriaProduto> categoriaProduto;
 
+    public void setId_fornecedor(Long id_fornecedor) {
+        this.id_fornecedor = id_fornecedor;
+    }
 
     public Long getId_fornecedor() {
         return id_fornecedor;

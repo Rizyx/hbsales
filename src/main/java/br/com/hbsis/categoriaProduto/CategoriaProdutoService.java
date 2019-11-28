@@ -1,13 +1,26 @@
 package br.com.hbsis.categoriaProduto;
 
 import br.com.hbsis.fornecedor.Fornecedor;
+import br.com.hbsis.fornecedor.FornecedorDTO;
 import br.com.hbsis.fornecedor.FornecedorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
 
 @Service
 public class CategoriaProdutoService {
@@ -21,6 +34,98 @@ public class CategoriaProdutoService {
         this.fornecedorService = fornecedorService;
     }
 
+    public  List<CategoriaProduto> findAll() {
+        List<CategoriaProduto> categoriaProdutos = iCategoriaProdutoRepository.findAll();
+        return categoriaProdutos;
+    }
+    public  List<CategoriaProduto> saveAll(List<CategoriaProduto> categoriaProdutos)  {
+
+        return iCategoriaProdutoRepository.saveAll(categoriaProdutos);
+    }
+
+    public boolean importExcel(MultipartFile file) {
+        Workbook workbook = getWorkBook(file);
+        Sheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> rows = sheet.iterator();
+        rows.next();
+        while(rows.hasNext()) {
+            Row row = rows.next();
+            CategoriaProduto categoriaProduto = new CategoriaProduto();
+            if (row.getCell(0).getCellType() == CellType.STRING) {
+                categoriaProduto.setCodCategoria(row.getCell(0).getStringCellValue());
+            }
+            if (row.getCell(1).getCellType() == CellType.STRING) {
+                categoriaProduto.setNomeCategoria(row.getCell(1).getStringCellValue());
+            }
+
+            if (row.getCell(2).getCellType() == CellType.NUMERIC) {
+                categoriaProduto.getFornecedor().getId_fornecedor();
+            }
+            iCategoriaProdutoRepository.save(categoriaProduto);
+        }
+        return true;
+    }
+
+    public Workbook getWorkBook(MultipartFile file) {
+        Workbook workbook = null;
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        try{
+            if(extension.equalsIgnoreCase("xlsx")){
+                workbook = new XSSFWorkbook(file.getInputStream());
+            }else if (extension.equalsIgnoreCase("xls")){
+                workbook = new HSSFWorkbook(file.getInputStream());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return workbook;
+    }
+
+    public boolean importJson(MultipartFile file) {
+        try{
+            InputStream inputStream = file.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            List<CategoriaProduto> categoriaProdutos = Arrays.asList(mapper.readValue(inputStream, CategoriaProduto[].class));
+            if(categoriaProdutos != null && categoriaProdutos.size()>0){
+                for(CategoriaProduto categoriaProduto : categoriaProdutos) {
+                    iCategoriaProdutoRepository.save(categoriaProduto);
+                }
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public List<CategoriaProduto> importCSV(MultipartFile file) throws Exception {
+
+            InputStreamReader reader = new InputStreamReader(file.getInputStream());
+            CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(0).build();
+            List<String[]> rows = csvReader.readAll();
+            List<CategoriaProduto> categoriaProdutos = new ArrayList<>();
+            for (String[] row : rows) {
+                try {
+                    CategoriaProduto categoriaProduto = new CategoriaProduto();
+                    Fornecedor fornecedor = new Fornecedor();
+                    FornecedorDTO fornecedorDTO;
+                    categoriaProduto.setCodCategoria((row[0]));
+                    categoriaProduto.setNomeCategoria(row[1]);
+                    fornecedorDTO = fornecedorService.findById(Long.parseLong(row[2]));
+                    fornecedor.setId_fornecedor(fornecedorDTO.getIdFornecedor());
+                    fornecedor.setRazaoSocial(fornecedorDTO.getRazaoSocial());
+                    fornecedor.setCNPJ(fornecedorDTO.getCNPJ());
+                    fornecedor.setNomeFantasia(fornecedorDTO.getNomeFantasia());
+                    fornecedor.setEndereco(fornecedorDTO.getEndereco());
+                    fornecedor.setTelefoneContato(fornecedorDTO.getTelefoneContato());
+                    fornecedor.setEmailContato(fornecedorDTO.getEmailContato());
+                    categoriaProduto.setFornecedor(fornecedor);
+                    categoriaProdutos.add(categoriaProduto);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        return iCategoriaProdutoRepository.saveAll(categoriaProdutos);
+    }
 
     public CategoriaProdutoDTO save(CategoriaProdutoDTO categoriaProdutoDTO) {
         Fornecedor findFornecedorid = fornecedorService.findFornecedorById(categoriaProdutoDTO.getIdFornecedor());

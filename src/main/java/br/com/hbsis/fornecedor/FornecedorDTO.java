@@ -39,10 +39,13 @@ public class FornecedorDTO {
         );
     }
 
-    public long getId(long id_fornecedor) {
-        return id_fornecedor;
+    public void setIdFornecedor(long idFornecedor) {
+        this.idFornecedor = idFornecedor;
     }
 
+    public long getIdFornecedor() {
+        return idFornecedor;
+    }
 
     public String getRazaoSocial() {
         return razaoSocial;
