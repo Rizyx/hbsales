@@ -11,17 +11,17 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_fornecedor;
-    @Column(name = "Razao_Social", nullable = false, length = 100)
+    @Column(name = "razao_Social", nullable = false, length = 100)
     private String razaoSocial;
     @Column(name = "CNPJ", unique = true, nullable = false, length = 30)
     private String CNPJ;
-    @Column(name = "Nome_Fantasia", nullable = false, length = 150)
+    @Column(name = "nome_Fantasia", nullable = false, length = 150)
     private String nomeFantasia;
     @Column(name = "Endereco", unique = true, length = 200)
     private String Endereco;
-    @Column(name = "Telefone_contato", unique = true, length = 20)
+    @Column(name = "telefone_contato", unique = true, length = 20)
     private String telefoneContato;
-    @Column(name = "Email_contato", unique = true, length = 120)
+    @Column(name = "email_contato", unique = true, length = 120)
     private String emailContato;
     @OneToMany(mappedBy="Fornecedor")
     private Set<CategoriaProduto> categoriaProduto;

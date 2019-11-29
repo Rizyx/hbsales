@@ -1,9 +1,7 @@
 package br.com.hbsis.categoriaProduto;
 
-import br.com.hbsis.fornecedor.Fornecedor;
-
 public class CategoriaProdutoDTO {
-    private long id;
+    private long id_categoria_produtos;
     private String codCategoria;
     private String nomeCategoria;
     private long idFornecedor;
@@ -19,28 +17,25 @@ public class CategoriaProdutoDTO {
         this.idFornecedor = idFornecedor;
 
     }
-    public CategoriaProdutoDTO(Long id, String codCategoria, String nomeCategoria, long idFornecedor) {
-        this.id = id;
+    public CategoriaProdutoDTO(Long id_categoria_produtos, String codCategoria, String nomeCategoria, long idFornecedor) {
+        this.id_categoria_produtos = id_categoria_produtos;
         this.codCategoria = codCategoria;
         this.nomeCategoria = nomeCategoria;
         this.idFornecedor = idFornecedor;
-
-
     }
 
 
     public static CategoriaProdutoDTO of(CategoriaProduto categoriaProduto) {
         return new CategoriaProdutoDTO(
-                categoriaProduto.getId(),
+                categoriaProduto.getId_categoria_produtos(),
                 categoriaProduto.getCodCategoria(),
                 categoriaProduto.getNomeCategoria(),
                 categoriaProduto.getFornecedor().getId_fornecedor()
-
         );
     }
 
-    public long getId() {
-        return id;
+    public long getId_categoria_produtos() {
+        return id_categoria_produtos;
     }
 
     public String getCodCategoria() {
@@ -70,7 +65,7 @@ public class CategoriaProdutoDTO {
     @Override
     public String toString() {
         return "Produto{" +
-                "id=" + id +
+                "id=" + id_categoria_produtos +
                 ", Codigo da_categoria='" + codCategoria + '\'' +
                 ", Nome da categoria='" + nomeCategoria + '\'' +
                 ", Id do Fornecedor da_categoria='" + idFornecedor + '\'' +

@@ -4,29 +4,16 @@ import com.opencsv.CSVWriter;
 
 import java.io.*;
 
-import com.opencsv.CSVReader;
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import org.hibernate.engine.jdbc.connections.spi.JdbcConnectionAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/categoriaProdutos")
@@ -57,54 +44,45 @@ public class CategoriaProdutoRest {
 
     @GetMapping("/export_csv")
     public void exportCSV(HttpServletResponse response) throws Exception {
-
-        //set file name and content type
         String filename = "cadastroProduto1.csv";
-
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + filename + "\"");
-
-        //create a csv writer
         PrintWriter writer = response.getWriter();
 
         ICSVWriter Writer = new CSVWriterBuilder(writer)
-                .withSeparator(';')
+                .withSeparator(',')
                 .withEscapeChar(CSVWriter.DEFAULT_ESCAPE_CHARACTER)
                 .withLineEnd(CSVWriter.DEFAULT_LINE_END)
                 .build();
-
-
-        //write all users to csv file
         for (CategoriaProduto categoriaProduto : categoriaProdutoService.findAll()) {
            Writer.writeNext(new String[]
-                   {categoriaProduto.getId().toString(),categoriaProduto.getCodCategoria(),
+                   {categoriaProduto.getCodCategoria(),
                            categoriaProduto.getNomeCategoria(),categoriaProduto.getFornecedor().getId_fornecedor().toString()});
         }
-
     }
 
-    @GetMapping("/{id}")
-    public CategoriaProdutoDTO find(@PathVariable("id") Long id) {
+    @GetMapping("/{id_categoria_produtos}")
+    public CategoriaProdutoDTO find(@PathVariable("id_categoria_produtos") Long id_categoria_produtos) {
 
-        LOGGER.info("Recebendo find by ID... id: [{}]", id);
+        LOGGER.info("Recebendo find by ID... id: [{}]", id_categoria_produtos);
 
-        return this.categoriaProdutoService.findById(id);
+        return this.categoriaProdutoService.findById(id_categoria_produtos);
     }
 
 
-    @PutMapping("/{id}")
-    public CategoriaProdutoDTO udpate(@PathVariable("id") Long id, @RequestBody CategoriaProdutoDTO categoriaProdutoDTO) {
-        LOGGER.info("Recebendo Update para Produto de ID: {}", id);
+    @PutMapping("/{id_categoria_produtos}")
+    public CategoriaProdutoDTO udpate(@PathVariable("id_categoria_produtos") Long id_categoria_produtos, @RequestBody CategoriaProdutoDTO categoriaProdutoDTO) {
+        LOGGER.info("Recebendo Update para Produto de ID: {}", id_categoria_produtos);
         LOGGER.debug("Payload: {}", categoriaProdutoDTO);
 
-        return this.categoriaProdutoService.update(categoriaProdutoDTO, id);
+        return this.categoriaProdutoService.update(categoriaProdutoDTO, id_categoria_produtos);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        LOGGER.info("Recebendo Delete para Produto de ID: {}", id);
+    @DeleteMapping("/{id_categoria_produtos}")
+    public void delete(@PathVariable("id_categoria_produtos") Long id_categoria_produtos) {
+        LOGGER.info("Recebendo Delete para Produto de ID: {}", id_categoria_produtos);
 
-        this.categoriaProdutoService.delete(id);
+        this.categoriaProdutoService.delete(id_categoria_produtos);
     }
 }

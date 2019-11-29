@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -112,12 +111,6 @@ public class CategoriaProdutoService {
                     categoriaProduto.setNomeCategoria(row[1]);
                     fornecedorDTO = fornecedorService.findById(Long.parseLong(row[2]));
                     fornecedor.setId_fornecedor(fornecedorDTO.getIdFornecedor());
-                    fornecedor.setRazaoSocial(fornecedorDTO.getRazaoSocial());
-                    fornecedor.setCNPJ(fornecedorDTO.getCNPJ());
-                    fornecedor.setNomeFantasia(fornecedorDTO.getNomeFantasia());
-                    fornecedor.setEndereco(fornecedorDTO.getEndereco());
-                    fornecedor.setTelefoneContato(fornecedorDTO.getTelefoneContato());
-                    fornecedor.setEmailContato(fornecedorDTO.getEmailContato());
                     categoriaProduto.setFornecedor(fornecedor);
                     categoriaProdutos.add(categoriaProduto);
                 } catch (Exception e) {
@@ -169,6 +162,16 @@ public class CategoriaProdutoService {
 
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
     }
+    public CategoriaProduto findCategoriaProdutoById(long id_categoria_produtos) {
+        Optional<CategoriaProduto> categoriaProdutoOptional = this.iCategoriaProdutoRepository.findById(id_categoria_produtos);
+
+
+        if (categoriaProdutoOptional.isPresent()) {
+            return categoriaProdutoOptional.get();
+        }
+
+        throw new IllegalArgumentException(String.format("ID %s não existe", id_categoria_produtos));
+    }
 
 
     public CategoriaProdutoDTO update(CategoriaProdutoDTO categoriaProdutoDTO, Long id) {
@@ -177,7 +180,7 @@ public class CategoriaProdutoService {
         if (produtoExistenteOptional.isPresent()) {
             CategoriaProduto categoriaProdutoExistente = produtoExistenteOptional.get();
 
-            LOGGER.info("Atualizando produto... id: [{}]", categoriaProdutoExistente.getId());
+            LOGGER.info("Atualizando produto... id: [{}]", categoriaProdutoExistente.getId_categoria_produtos());
             LOGGER.debug("Payload: {}", categoriaProdutoDTO);
             LOGGER.debug("Produto Existente: {}", categoriaProdutoExistente);
 
@@ -194,9 +197,9 @@ public class CategoriaProdutoService {
 
     }
 
-    public void delete(Long id) {
-        LOGGER.info("Executando delete para Produto de ID: [{}]", id);
+    public void delete(Long id_categoria_produtos) {
+        LOGGER.info("Executando delete para Produto de ID: [{}]", id_categoria_produtos);
 
-        this.iCategoriaProdutoRepository.deleteById(id);
+        this.iCategoriaProdutoRepository.deleteById(id_categoria_produtos);
     }
 }

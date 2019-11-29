@@ -22,6 +22,7 @@ public class FornecedorDTO {
         this.CNPJ = CNPJ;
         this.nomeFantasia = nomeFantasia;
         this.Endereco = Endereco;
+        this.telefoneContato = telefoneContato;
         this.emailContato = emailContato;
 
 

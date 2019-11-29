@@ -1,16 +1,18 @@
 package br.com.hbsis.categoriaProduto;
 
 import br.com.hbsis.fornecedor.Fornecedor;
+import br.com.hbsis.linhaCategoria.LinhaCategoria;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "seg_categoria_produtos")
 public class CategoriaProduto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id_categoria_produtos;
     @Column(name = "Cod_categoria", unique = true, nullable = false, length = 100)
     private String codCategoria;
     @Column(name = "Nome_categoria", unique = true, nullable = false, length = 100)
@@ -18,6 +20,8 @@ public class CategoriaProduto {
     @ManyToOne
     @JoinColumn(name="fornecedor_categoria", referencedColumnName = "id_fornecedor")
     private Fornecedor Fornecedor;
+    @OneToMany(mappedBy="CategoriaProduto")
+    private Set<LinhaCategoria> linhaCategoria;
 
     @Transient
     private MultipartFile file;
@@ -30,8 +34,13 @@ public class CategoriaProduto {
     }
 
 
-    public Long getId() {
-        return id;
+
+    public Long getId_categoria_produtos() {
+        return id_categoria_produtos;
+    }
+
+    public void setId_categoria_produtos(Long id_categoria_produtos) {
+        this.id_categoria_produtos = id_categoria_produtos;
     }
 
     public String getCodCategoria() {
@@ -59,6 +68,13 @@ public class CategoriaProduto {
         this.Fornecedor = fornecedor;
     }
 
+    public Set<LinhaCategoria> getLinhaCategoria() {
+        return linhaCategoria;
+    }
+
+    public void setLinhaCategoria(Set<LinhaCategoria> linhaCategoria) {
+        this.linhaCategoria = linhaCategoria;
+    }
 
     public MultipartFile getFile() {
         return file;
@@ -71,7 +87,7 @@ public class CategoriaProduto {
     @Override
     public String toString() {
         return "Produto{" +
-                "id=" + id +
+                "id=" + id_categoria_produtos +
                 ", Codigo da categoria='" + codCategoria + '\'' +
                 ", Nome da categoria='" + nomeCategoria + '\'' +
                 ", Fornecedor da categoria='" + Fornecedor + '\'' +
