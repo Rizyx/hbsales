@@ -42,60 +42,6 @@ public class CategoriaProdutoService {
         return iCategoriaProdutoRepository.saveAll(categoriaProdutos);
     }
 
-    public boolean importExcel(MultipartFile file) {
-        Workbook workbook = getWorkBook(file);
-        Sheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> rows = sheet.iterator();
-        rows.next();
-        while(rows.hasNext()) {
-            Row row = rows.next();
-            CategoriaProduto categoriaProduto = new CategoriaProduto();
-            if (row.getCell(0).getCellType() == CellType.STRING) {
-                categoriaProduto.setCodCategoria(row.getCell(0).getStringCellValue());
-            }
-            if (row.getCell(1).getCellType() == CellType.STRING) {
-                categoriaProduto.setNomeCategoria(row.getCell(1).getStringCellValue());
-            }
-
-            if (row.getCell(2).getCellType() == CellType.NUMERIC) {
-                categoriaProduto.getFornecedor().getId_fornecedor();
-            }
-            iCategoriaProdutoRepository.save(categoriaProduto);
-        }
-        return true;
-    }
-
-    public Workbook getWorkBook(MultipartFile file) {
-        Workbook workbook = null;
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        try{
-            if(extension.equalsIgnoreCase("xlsx")){
-                workbook = new XSSFWorkbook(file.getInputStream());
-            }else if (extension.equalsIgnoreCase("xls")){
-                workbook = new HSSFWorkbook(file.getInputStream());
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return workbook;
-    }
-
-    public boolean importJson(MultipartFile file) {
-        try{
-            InputStream inputStream = file.getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            List<CategoriaProduto> categoriaProdutos = Arrays.asList(mapper.readValue(inputStream, CategoriaProduto[].class));
-            if(categoriaProdutos != null && categoriaProdutos.size()>0){
-                for(CategoriaProduto categoriaProduto : categoriaProdutos) {
-                    iCategoriaProdutoRepository.save(categoriaProduto);
-                }
-            }
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     public List<CategoriaProduto> importCSV(MultipartFile file) throws Exception {
 
             InputStreamReader reader = new InputStreamReader(file.getInputStream());

@@ -34,7 +34,6 @@ public class LinhaCategoriaService {
         return linhaCategorias;
     }
     public  List<LinhaCategoria> saveAll(List<LinhaCategoria> linhaCategorias)  {
-
         return iLinhaCategoriaRepository.saveAll(linhaCategorias);
     }
     public LinhaCategoriaDTO save(LinhaCategoriaDTO linhaCategoriaDTO) {
@@ -49,9 +48,6 @@ public class LinhaCategoriaService {
         linhaCategoria.setCodLinhaCategoria(linhaCategoriaDTO.getCodLinhaCategoria());
         linhaCategoria.setCategoriaProduto(findCategoriaProdutoid);
         linhaCategoria.setNomeLinha(linhaCategoriaDTO.getNomeLinha());
-
-
-
         linhaCategoria = this.iLinhaCategoriaRepository.save(linhaCategoria);
 
         return linhaCategoriaDTO.of(linhaCategoria);
@@ -77,6 +73,16 @@ public class LinhaCategoriaService {
         }
 
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
+    }
+    public LinhaCategoria findLinhaCategoriaById(long id_linha_categoria) {
+        Optional<LinhaCategoria> linhaCategoriaOptional = this.iLinhaCategoriaRepository.findById(id_linha_categoria);
+
+
+        if (linhaCategoriaOptional.isPresent()) {
+            return linhaCategoriaOptional.get();
+        }
+
+        throw new IllegalArgumentException(String.format("ID %s não existe", id_linha_categoria));
     }
 
     public LinhaCategoriaDTO update(LinhaCategoriaDTO linhaCategoriaDTO, Long id) {
@@ -122,9 +128,6 @@ public class LinhaCategoriaService {
                 linhaCategoria.setCodLinhaCategoria((row[0]));
                 categoriaProdutoDTO = categoriaProdutoService.findById(Long.parseLong(row[1]));
                 categoriaProduto.setId_categoria_produtos(categoriaProdutoDTO.getId_categoria_produtos());
-                categoriaProduto.setCodCategoria(categoriaProdutoDTO.getCodCategoria());
-                categoriaProduto.getFornecedor();
-                categoriaProduto.setNomeCategoria(categoriaProdutoDTO.getNomeCategoria());
                 linhaCategoria.setNomeLinha(row[2]);
                 linhaCategoria.setCategoriaProduto(categoriaProduto);
                 linhaCategorias.add(linhaCategoria);

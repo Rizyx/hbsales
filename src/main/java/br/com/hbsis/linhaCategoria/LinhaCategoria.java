@@ -1,7 +1,9 @@
 package br.com.hbsis.linhaCategoria;
 import br.com.hbsis.categoriaProduto.CategoriaProduto;
+import br.com.hbsis.produto.Produto;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "seg_linha_categorias")
@@ -16,6 +18,8 @@ public class LinhaCategoria {
     private CategoriaProduto CategoriaProduto;
     @Column(name = "nome_linha", nullable = false, length = 100)
     private String nomeLinha;
+    @OneToMany(mappedBy="LinhaCategoria")
+    private Set<Produto> produtos;
     @Transient
     private MultipartFile file;
 
@@ -49,6 +53,14 @@ public class LinhaCategoria {
 
     public void setNomeLinha(String nomeLinha) {
         this.nomeLinha = nomeLinha;
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     public MultipartFile getFile() {

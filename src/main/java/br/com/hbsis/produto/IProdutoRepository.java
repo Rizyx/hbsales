@@ -1,8 +1,8 @@
-package br.com.hbsis.fornecedor;
+package br.com.hbsis.produto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IFornecedorRepository extends JpaRepository<Fornecedor, Long> {
+public interface IProdutoRepository extends JpaRepository<Produto, Long> {
 }
