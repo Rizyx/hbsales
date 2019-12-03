@@ -1,41 +1,39 @@
 package br.com.hbsis.categoriaProduto;
 
 public class CategoriaProdutoDTO {
-    private long id_categoria_produtos;
+
+    private long idCategoriaProdutos;
     private String codCategoria;
     private String nomeCategoria;
     private long idFornecedor;
 
-
     public CategoriaProdutoDTO(){
-
     }
 
     public CategoriaProdutoDTO(String codCategoria, String nomeCategoria, long idFornecedor) {
         this.codCategoria = codCategoria;
         this.nomeCategoria = nomeCategoria;
         this.idFornecedor = idFornecedor;
-
     }
-    public CategoriaProdutoDTO(Long id_categoria_produtos, String codCategoria, String nomeCategoria, long idFornecedor) {
-        this.id_categoria_produtos = id_categoria_produtos;
+
+    public CategoriaProdutoDTO(Long id, String codCategoria, String nomeCategoria, long idFornecedor) {
+        this.idCategoriaProdutos = id;
         this.codCategoria = codCategoria;
         this.nomeCategoria = nomeCategoria;
         this.idFornecedor = idFornecedor;
     }
 
-
     public static CategoriaProdutoDTO of(CategoriaProduto categoriaProduto) {
         return new CategoriaProdutoDTO(
-                categoriaProduto.getId_categoria_produtos(),
+                categoriaProduto.getId(),
                 categoriaProduto.getCodCategoria(),
                 categoriaProduto.getNomeCategoria(),
-                categoriaProduto.getFornecedor().getId_fornecedor()
+                categoriaProduto.getFornecedor().getId()
         );
     }
 
-    public long getId_categoria_produtos() {
-        return id_categoria_produtos;
+    public long getIdCategoriaProdutos() {
+        return idCategoriaProdutos;
     }
 
     public String getCodCategoria() {
@@ -65,7 +63,7 @@ public class CategoriaProdutoDTO {
     @Override
     public String toString() {
         return "Produto{" +
-                "id=" + id_categoria_produtos +
+                "id=" + idCategoriaProdutos +
                 ", Codigo da_categoria='" + codCategoria + '\'' +
                 ", Nome da categoria='" + nomeCategoria + '\'' +
                 ", Id do Fornecedor da_categoria='" + idFornecedor + '\'' +

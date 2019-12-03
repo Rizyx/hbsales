@@ -5,11 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/fornecedores")
 public class FornecedorRest {
     private static final Logger LOGGER = LoggerFactory.getLogger(FornecedorRest.class);
-
     private final FornecedorService fornecedorService;
 
     @Autowired
@@ -21,30 +22,31 @@ public class FornecedorRest {
     public FornecedorDTO save(@RequestBody FornecedorDTO fornecedorDTO) {
         LOGGER.info("Recebendo solicitação de persistência de Fornecedor...");
         LOGGER.debug("Payaload: {}", fornecedorDTO);
-
         return this.fornecedorService.save(fornecedorDTO);
     }
 
-    @GetMapping("/{id_fornecedor}")
-    public FornecedorDTO find(@PathVariable("id_fornecedor") Long id_fornecedor) {
-
-        LOGGER.info("Recebendo find by ID... id: [{}]", id_fornecedor);
-
-        return this.fornecedorService.findById(id_fornecedor);
+    @GetMapping("/{id}")
+    public FornecedorDTO find(@PathVariable("id") Long id) {
+        LOGGER.info("Recebendo find by ID... id: [{}]", id);
+        return this.fornecedorService.findById(id);
     }
 
-    @PutMapping("/{id_fornecedor}")
-    public FornecedorDTO udpate(@PathVariable("id_fornecedor") Long id_fornecedor, @RequestBody FornecedorDTO fornecedorDTO) {
-        LOGGER.info("Recebendo Update para Fornecedor de ID: {}", id_fornecedor);
+    @GetMapping("/todos")
+    public List<Fornecedor> findFornecedor() {
+        List<Fornecedor> fornecedors = fornecedorService.findAll();
+        return fornecedors;
+    }
+
+    @PutMapping("/{id}")
+    public FornecedorDTO udpate(@PathVariable("id") Long id, @RequestBody FornecedorDTO fornecedorDTO) {
+        LOGGER.info("Recebendo Update para Fornecedor de ID: {}", id);
         LOGGER.debug("Payload: {}", fornecedorDTO);
-
-        return this.fornecedorService.update(fornecedorDTO, id_fornecedor);
+        return this.fornecedorService.update(fornecedorDTO, id);
     }
 
-    @DeleteMapping("/{id_fornecedor}")
-    public void delete(@PathVariable("id_fornecedor") Long id_fornecedor) {
-        LOGGER.info("Recebendo Delete para Fornecedor de ID: {}", id_fornecedor);
-
-        this.fornecedorService.delete(id_fornecedor);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        LOGGER.info("Recebendo Delete para Fornecedor de ID: {}", id);
+        this.fornecedorService.delete(id);
     }
 }

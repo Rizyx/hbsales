@@ -1,37 +1,30 @@
 package br.com.hbsis.fornecedor;
 
-import br.com.hbsis.categoriaProduto.CategoriaProduto;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "seg_fornecedores")
 public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_fornecedor;
-    @Column(name = "razao_Social", nullable = false, length = 100)
+    private Long id;
+    @Column(name = "razao_Social", nullable = false)
     private String razaoSocial;
-    @Column(name = "CNPJ", unique = true, nullable = false, length = 30)
-    private String CNPJ;
-    @Column(name = "nome_Fantasia", nullable = false, length = 150)
+    @Column(name = "cnpj", unique = true, nullable = false)
+    private String cnpj;
+    @Column(name = "nome_Fantasia", nullable = false)
     private String nomeFantasia;
-    @Column(name = "Endereco", unique = true, length = 200)
-    private String Endereco;
-    @Column(name = "telefone_contato", unique = true, length = 20)
+    @Column(name = "endereco", unique = true)
+    private String endereco;
+    @Column(name = "telefone_contato", unique = true)
     private String telefoneContato;
-    @Column(name = "email_contato", unique = true, length = 120)
+    @Column(name = "email_contato", unique = true)
     private String emailContato;
-    @OneToMany(mappedBy="Fornecedor")
-    private Set<CategoriaProduto> categoriaProduto;
 
-    public void setId_fornecedor(Long id_fornecedor) {
-        this.id_fornecedor = id_fornecedor;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId_fornecedor() {
-        return id_fornecedor;
+    public Long getId() {
+        return id;
     }
 
     public String getRazaoSocial() {
@@ -42,12 +35,12 @@ public class Fornecedor {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCNPJ() {
-        return CNPJ;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getNomeFantasia() {
@@ -59,11 +52,11 @@ public class Fornecedor {
     }
 
     public String getEndereco() {
-        return Endereco;
+        return endereco;
     }
 
     public void setEndereco(String endereco) {
-        Endereco = endereco;
+        this.endereco = endereco;
     }
 
     public String getTelefoneContato() {
@@ -82,25 +75,16 @@ public class Fornecedor {
         this.emailContato = emailContato;
     }
 
-    public Set<CategoriaProduto> getCategoriaProduto() {
-        return categoriaProduto;
-    }
-
-    public void setCategoriaProduto(Set<CategoriaProduto> categoriaProduto) {
-        this.categoriaProduto = categoriaProduto;
-    }
-
     @Override
     public String toString() {
         return "Fornecedor{" +
-                "id=" + id_fornecedor +
+                "id=" + id +
                 ", Razao social='" + razaoSocial + '\'' +
-                ", CNPJ='" + CNPJ + '\'' +
+                ", CNPJ='" + cnpj + '\'' +
                 ", Nome Fanstasia='" + nomeFantasia + '\'' +
-                ", Endereço='" + Endereco + '\'' +
+                ", Endereço='" + endereco + '\'' +
                 ", Telefone de contato='" + telefoneContato + '\'' +
                 ", E-mail de contato='" + emailContato + '\'' +
-                ", Categoria de produto'" + categoriaProduto + '\'' +
                 '}';
     }
 }

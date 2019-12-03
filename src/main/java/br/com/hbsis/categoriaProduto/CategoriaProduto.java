@@ -1,47 +1,27 @@
 package br.com.hbsis.categoriaProduto;
 
 import br.com.hbsis.fornecedor.Fornecedor;
-import br.com.hbsis.linhaCategoria.LinhaCategoria;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "seg_categoria_produtos")
 public class CategoriaProduto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_categoria_produtos;
-    @Column(name = "Cod_categoria", unique = true, nullable = false, length = 100)
+    private Long id;
+    @Column(name = "cod_categoria", unique = true, nullable = false, length = 100)
     private String codCategoria;
-    @Column(name = "Nome_categoria", unique = true, nullable = false, length = 100)
+    @Column(name = "nome_categoria", unique = true, nullable = false, length = 100)
     private String nomeCategoria;
     @ManyToOne
-    @JoinColumn(name="fornecedor_categoria", referencedColumnName = "id_fornecedor")
-    private Fornecedor Fornecedor;
-    @OneToMany(mappedBy="CategoriaProduto")
-    private Set<LinhaCategoria> linhaCategoria;
+    @JoinColumn(name="fornecedor_categoria", referencedColumnName = "id")
+    private Fornecedor fornecedor;
 
-    @Transient
-    private MultipartFile file;
-
-    public CategoriaProduto() {
-
+    public Long getId() {
+        return id;
     }
 
-    public CategoriaProduto(String codCategoria, String nomeCategoria,Fornecedor Fornecedor) {
-    }
-
-
-
-    public Long getId_categoria_produtos() {
-        return id_categoria_produtos;
-    }
-
-    public void setId_categoria_produtos(Long id_categoria_produtos) {
-        this.id_categoria_produtos = id_categoria_produtos;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public String getCodCategoria() {
         return codCategoria;
@@ -59,38 +39,21 @@ public class CategoriaProduto {
         this.nomeCategoria = nomeCategoria;
     }
 
-
     public Fornecedor getFornecedor() {
-        return Fornecedor;
+        return fornecedor;
     }
 
     public void setFornecedor(Fornecedor fornecedor) {
-        this.Fornecedor = fornecedor;
-    }
-
-    public Set<LinhaCategoria> getLinhaCategoria() {
-        return linhaCategoria;
-    }
-
-    public void setLinhaCategoria(Set<LinhaCategoria> linhaCategoria) {
-        this.linhaCategoria = linhaCategoria;
-    }
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
+        this.fornecedor = fornecedor;
     }
 
     @Override
     public String toString() {
         return "Produto{" +
-                "id=" + id_categoria_produtos +
+                "id=" + id +
                 ", Codigo da categoria='" + codCategoria + '\'' +
                 ", Nome da categoria='" + nomeCategoria + '\'' +
-                ", Fornecedor da categoria='" + Fornecedor + '\'' +
+                ", Fornecedor da categoria='" + fornecedor + '\'' +
                 '}';
     }
 }

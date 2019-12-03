@@ -10,11 +10,11 @@ import java.util.Set;
 public class LinhaCategoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_linha_categoria ;
+    private Long id;
     @Column(name = "cod_linha_categoria", unique = true, nullable = false, length = 100)
     private String codLinhaCategoria;
     @ManyToOne
-    @JoinColumn(name = "categoria_linha",  referencedColumnName = "id_categoria_produtos")
+    @JoinColumn(name = "categoria_linha",  referencedColumnName = "id")
     private CategoriaProduto CategoriaProduto;
     @Column(name = "nome_linha", nullable = false, length = 100)
     private String nomeLinha;
@@ -23,12 +23,12 @@ public class LinhaCategoria {
     @Transient
     private MultipartFile file;
 
-    public Long getId_linha_categoria() {
-        return id_linha_categoria;
+    public Long getId() {
+        return id;
     }
 
-    public void setId_linha_categoria(Long id_linha_categoria) {
-        this.id_linha_categoria = id_linha_categoria;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCodLinhaCategoria() {
@@ -55,14 +55,6 @@ public class LinhaCategoria {
         this.nomeLinha = nomeLinha;
     }
 
-    public Set<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(Set<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
     public MultipartFile getFile() {
         return file;
     }
@@ -74,7 +66,7 @@ public class LinhaCategoria {
     @Override
     public String toString() {
         return "Produto{" +
-                "id_linha_categoria=" + id_linha_categoria +
+                "id_linha_categoria=" + id +
                 ", Código da Linha da Categoria de produtos='" + codLinhaCategoria + '\'' +
                 ", Categoria da linha='" + CategoriaProduto + '\'' +
                 ", Nome da linha='" + nomeLinha + '\'' +

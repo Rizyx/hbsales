@@ -3,36 +3,31 @@ package br.com.hbsis.fornecedor;
 public class FornecedorDTO {
     private long idFornecedor;
     private String razaoSocial;
-    private String CNPJ;
+    private String cnpj;
     private String nomeFantasia;
-    private String Endereco;
+    private String endereco;
     private String telefoneContato;
     private String emailContato;
 
     public FornecedorDTO() {
     }
-    public FornecedorDTO(String razaoSocial, String CNPJ) {
-        this.razaoSocial = razaoSocial;
-        this.CNPJ = CNPJ;
-    }
-    public FornecedorDTO(Long id_fornecedor, String razaoSocial, String CNPJ, String nomeFantasia, String Endereco,
+
+    public FornecedorDTO(Long id, String razaoSocial, String cnpj, String nomeFantasia, String Endereco,
                          String telefoneContato, String emailContato) {
-        this.idFornecedor = id_fornecedor;
+        this.idFornecedor = id;
         this.razaoSocial = razaoSocial;
-        this.CNPJ = CNPJ;
+        this.cnpj = cnpj;
         this.nomeFantasia = nomeFantasia;
-        this.Endereco = Endereco;
+        this.endereco = Endereco;
         this.telefoneContato = telefoneContato;
         this.emailContato = emailContato;
-
-
     }
 
     public static FornecedorDTO of(Fornecedor fornecedor) {
         return new FornecedorDTO(
-                fornecedor.getId_fornecedor(),
+                fornecedor.getId(),
                 fornecedor.getRazaoSocial(),
-                fornecedor.getCNPJ(),
+                fornecedor.getCnpj(),
                 fornecedor.getNomeFantasia(),
                 fornecedor.getEndereco(),
                 fornecedor.getTelefoneContato(),
@@ -40,9 +35,7 @@ public class FornecedorDTO {
         );
     }
 
-    public void setIdFornecedor(long idFornecedor) {
-        this.idFornecedor = idFornecedor;
-    }
+    public void setIdFornecedor(long idFornecedor) { this.idFornecedor = idFornecedor; }
 
     public long getIdFornecedor() {
         return idFornecedor;
@@ -56,12 +49,12 @@ public class FornecedorDTO {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCNPJ() {
-        return CNPJ;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getNomeFantasia() {
@@ -73,11 +66,11 @@ public class FornecedorDTO {
     }
 
     public String getEndereco() {
-        return Endereco;
+        return endereco;
     }
 
     public void setEndereco(String endereco) {
-        this.Endereco = endereco;
+        this.endereco = endereco;
     }
 
     public String getTelefoneContato() {
@@ -101,13 +94,12 @@ public class FornecedorDTO {
         return "Fornecedor{" +
                 "id=" + idFornecedor +
                 ", Razao social='" + razaoSocial + '\'' +
-                ", CNPJ='" + CNPJ + '\'' +
+                ", CNPJ='" + cnpj + '\'' +
                 ", Nome Fanstasia='" + nomeFantasia + '\'' +
-                ", Endereço='" + Endereco + '\'' +
+                ", Endereço='" + endereco + '\'' +
                 ", Telefone de contato='" + telefoneContato + '\'' +
                 ", E-mail de contato='" + emailContato + '\'' +
                 '}';
     }
-
 }
 
