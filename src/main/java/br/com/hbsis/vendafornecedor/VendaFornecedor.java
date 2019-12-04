@@ -63,7 +63,7 @@ public class VendaFornecedor {
 
     @Override
     public String toString() {
-        return "Produto{" +
+        return "VendaFornecedor{" +
                 "id=" + id +
                 ", Data de inicio='" + dataInicio + '\'' +
                 ", Data de final='" + dataFinal + '\'' +
