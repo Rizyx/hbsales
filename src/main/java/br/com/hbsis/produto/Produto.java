@@ -26,8 +26,6 @@ public class Produto {
     private double pesoUnidade;
     @Column(name = "validade")
     private LocalDateTime validade;
-    @Transient
-    private MultipartFile file;
 
     public Long getId() {
         return id;
@@ -85,14 +83,6 @@ public class Produto {
 
     public void setValidade(LocalDateTime validade) {
         this.validade = validade;
-    }
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
 
     @Override

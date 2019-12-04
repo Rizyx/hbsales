@@ -18,10 +18,6 @@ public class LinhaCategoria {
     private CategoriaProduto CategoriaProduto;
     @Column(name = "nome_linha", nullable = false, length = 100)
     private String nomeLinha;
-    @OneToMany(mappedBy="LinhaCategoria")
-    private Set<Produto> produtos;
-    @Transient
-    private MultipartFile file;
 
     public Long getId() {
         return id;
@@ -53,14 +49,6 @@ public class LinhaCategoria {
 
     public void setNomeLinha(String nomeLinha) {
         this.nomeLinha = nomeLinha;
-    }
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
 
     @Override

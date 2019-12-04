@@ -23,6 +23,13 @@ public class FornecedorDTO {
         this.emailContato = emailContato;
     }
 
+    public FornecedorDTO(long idFornecedor ,String razaoSocial, String cnpj, String nomeFantasia) {
+        this.idFornecedor = idFornecedor;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.nomeFantasia = nomeFantasia;
+    }
+
     public static FornecedorDTO of(Fornecedor fornecedor) {
         return new FornecedorDTO(
                 fornecedor.getId(),

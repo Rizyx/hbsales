@@ -1,5 +1,10 @@
 package br.com.hbsis.produto;
 
+import br.com.hbsis.categoriaProduto.CategoriaProdutoDTO;
+import br.com.hbsis.categoriaProduto.CategoriaProdutoService;
+import br.com.hbsis.fornecedor.FornecedorDTO;
+import br.com.hbsis.fornecedor.FornecedorService;
+import br.com.hbsis.linhaCategoria.ILinhaCategoriaRepository;
 import br.com.hbsis.linhaCategoria.LinhaCategoria;
 import br.com.hbsis.linhaCategoria.LinhaCategoriaDTO;
 import br.com.hbsis.linhaCategoria.LinhaCategoriaService;
@@ -141,16 +146,34 @@ public class ProdutoService {
                 Produto produto = new Produto();
                 LinhaCategoria linhaCategoria = new LinhaCategoria();
                 LinhaCategoriaDTO linhaCategoriaDTO;
-                produto.setCodProduto((row[0]));
-                produto.setNomeProduto(row[1]);
-                produto.setPrecoProduto(Double.parseDouble(row[2]));
-                linhaCategoriaDTO = linhaCategoriaService.findById(Long.parseLong(row[3]));
-                linhaCategoria.setId(linhaCategoriaDTO.getIdLinhaCategoria());
-                produto.setUnidadeCaixaProduto(Long.parseLong(row[4]));
-                produto.setPesoUnidade(Double.parseDouble(row[5]));
-                produto.setValidade(LocalDateTime.from(formatter.parse(row[6])));
-                produto.setLinhaCategoria(linhaCategoria);
-                produtos.add(produto);
+                produto.setId(Long.parseLong(row[0]));
+                Optional<Produto> produtoExistenteOptional = this.iProdutoRepository.findById(produto.getId());
+                if(produtoExistenteOptional.isPresent()){
+                    produto.setCodProduto(row[1]);
+                    produto.setNomeProduto(row[2]);
+                    produto.setPrecoProduto(Double.parseDouble(row[3]));
+                    linhaCategoriaDTO = linhaCategoriaService.findById(Long.parseLong(row[4]));
+                    linhaCategoria.setId(linhaCategoriaDTO.getIdLinhaCategoria());
+                    produto.setUnidadeCaixaProduto(Long.parseLong(row[5]));
+                    produto.setPesoUnidade(Double.parseDouble(row[6]));
+                    produto.setValidade(LocalDateTime.from(formatter.parse(row[7])));
+                    produto.setLinhaCategoria(linhaCategoria);
+                    update(ProdutoDTO.of(produto),produto.getId());
+                }else{
+                    Produto produto2 = new Produto();
+                    LinhaCategoria linhaCategoria2 = new LinhaCategoria();
+                    LinhaCategoriaDTO linhaCategoriaDTO2;
+                    produto2.setCodProduto(row[0]);
+                    produto2.setNomeProduto(row[1]);
+                    produto2.setPrecoProduto(Double.parseDouble(row[2]));
+                    linhaCategoriaDTO2 = linhaCategoriaService.findById(Long.parseLong(row[3]));
+                    linhaCategoria2.setId(linhaCategoriaDTO2.getIdLinhaCategoria());
+                    produto2.setUnidadeCaixaProduto(Long.parseLong(row[4]));
+                    produto2.setPesoUnidade(Double.parseDouble(row[5]));
+                    produto2.setValidade(LocalDateTime.from(formatter.parse(row[6])));
+                    produto2.setLinhaCategoria(linhaCategoria2);
+                    produtos.add(produto2);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
