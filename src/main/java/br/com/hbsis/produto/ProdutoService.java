@@ -1,13 +1,8 @@
 package br.com.hbsis.produto;
 
-import br.com.hbsis.categoriaProduto.CategoriaProdutoDTO;
-import br.com.hbsis.categoriaProduto.CategoriaProdutoService;
-import br.com.hbsis.fornecedor.FornecedorDTO;
-import br.com.hbsis.fornecedor.FornecedorService;
-import br.com.hbsis.linhaCategoria.ILinhaCategoriaRepository;
-import br.com.hbsis.linhaCategoria.LinhaCategoria;
-import br.com.hbsis.linhaCategoria.LinhaCategoriaDTO;
-import br.com.hbsis.linhaCategoria.LinhaCategoriaService;
+import br.com.hbsis.linhacategoria.LinhaCategoria;
+import br.com.hbsis.linhacategoria.LinhaCategoriaDTO;
+import br.com.hbsis.linhacategoria.LinhaCategoriaService;
 import com.opencsv.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -41,9 +36,6 @@ public class ProdutoService {
         return produtos;
     }
 
-    public  List<Produto> saveAll(List<Produto> produtos)  {
-        return iProdutoRepository.saveAll(produtos);
-    }
     public ProdutoDTO save(ProdutoDTO produtoDTO) {
         LinhaCategoria findLinhaCategoriaId = linhaCategoriaService.findLinhaCategoriaById(produtoDTO.getLinhaCategoria());
 

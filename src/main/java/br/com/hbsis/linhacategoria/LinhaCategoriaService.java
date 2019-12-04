@@ -1,8 +1,8 @@
-package br.com.hbsis.linhaCategoria;
+package br.com.hbsis.linhacategoria;
 
-import br.com.hbsis.categoriaProduto.CategoriaProduto;
-import br.com.hbsis.categoriaProduto.CategoriaProdutoDTO;
-import br.com.hbsis.categoriaProduto.CategoriaProdutoService;
+import br.com.hbsis.categoriaproduto.CategoriaProduto;
+import br.com.hbsis.categoriaproduto.CategoriaProdutoDTO;
+import br.com.hbsis.categoriaproduto.CategoriaProdutoService;
 import com.opencsv.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

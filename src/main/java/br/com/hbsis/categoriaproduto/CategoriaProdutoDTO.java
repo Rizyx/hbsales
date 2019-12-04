@@ -1,4 +1,4 @@
-package br.com.hbsis.categoriaProduto;
+package br.com.hbsis.categoriaproduto;
 
 public class CategoriaProdutoDTO {
 

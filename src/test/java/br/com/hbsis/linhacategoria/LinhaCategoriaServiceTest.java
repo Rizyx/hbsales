@@ -1,8 +1,6 @@
-package br.com.hbsis.linhaCategoria;
+package br.com.hbsis.linhacategoria;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LinhaCategoriaServiceTest {
 

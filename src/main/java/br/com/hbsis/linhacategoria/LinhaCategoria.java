@@ -1,9 +1,7 @@
-package br.com.hbsis.linhaCategoria;
-import br.com.hbsis.categoriaProduto.CategoriaProduto;
-import br.com.hbsis.produto.Produto;
-import org.springframework.web.multipart.MultipartFile;
+package br.com.hbsis.linhacategoria;
+import br.com.hbsis.categoriaproduto.CategoriaProduto;
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "seg_linha_categorias")

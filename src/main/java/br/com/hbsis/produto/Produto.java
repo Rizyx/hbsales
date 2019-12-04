@@ -1,7 +1,6 @@
 package br.com.hbsis.produto;
 
-import br.com.hbsis.linhaCategoria.LinhaCategoria;
-import org.springframework.web.multipart.MultipartFile;
+import br.com.hbsis.linhacategoria.LinhaCategoria;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

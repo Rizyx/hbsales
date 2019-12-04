@@ -1,4 +1,4 @@
-package br.com.hbsis.linhaCategoria;
+package br.com.hbsis.linhacategoria;
 
 public class LinhaCategoriaDTO {
     private long idLinhaCategoria;
