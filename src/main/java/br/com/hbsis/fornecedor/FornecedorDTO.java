@@ -3,17 +3,17 @@ package br.com.hbsis.fornecedor;
 public class FornecedorDTO {
     private long idFornecedor;
     private String razaoSocial;
-    private String cnpj;
+    private Long cnpj;
     private String nomeFantasia;
     private String endereco;
-    private String telefoneContato;
+    private Long telefoneContato;
     private String emailContato;
 
     public FornecedorDTO() {
     }
 
-    public FornecedorDTO(Long id, String razaoSocial, String cnpj, String nomeFantasia, String Endereco,
-                         String telefoneContato, String emailContato) {
+    public FornecedorDTO(Long id, String razaoSocial, Long cnpj, String nomeFantasia, String Endereco,
+                         Long telefoneContato, String emailContato) {
         this.idFornecedor = id;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
@@ -23,7 +23,7 @@ public class FornecedorDTO {
         this.emailContato = emailContato;
     }
 
-    public FornecedorDTO(long idFornecedor ,String razaoSocial, String cnpj, String nomeFantasia) {
+    public FornecedorDTO(long idFornecedor ,String razaoSocial, Long cnpj, String nomeFantasia) {
         this.idFornecedor = idFornecedor;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
@@ -56,11 +56,11 @@ public class FornecedorDTO {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCnpj() {
+    public Long getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
+    public void setCnpj(Long cnpj) {
         this.cnpj = cnpj;
     }
 
@@ -80,11 +80,11 @@ public class FornecedorDTO {
         this.endereco = endereco;
     }
 
-    public String getTelefoneContato() {
+    public Long getTelefoneContato() {
         return telefoneContato;
     }
 
-    public void setTelefoneContato(String telefoneContato) {
+    public void setTelefoneContato(Long telefoneContato) {
         this.telefoneContato = telefoneContato;
     }
 

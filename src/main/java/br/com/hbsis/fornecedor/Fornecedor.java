@@ -11,14 +11,14 @@ public class Fornecedor {
     @Column(name = "razao_Social", nullable = false)
     private String razaoSocial;
     @Column(name = "cnpj", unique = true, nullable = false)
-    private String cnpj;
+    private Long cnpj;
     @Column(name = "nome_Fantasia", nullable = false)
     private String nomeFantasia;
-    @Column(name = "endereco", unique = true)
+    @Column(name = "endereco", nullable = false)
     private String endereco;
-    @Column(name = "telefone_contato", unique = true)
-    private String telefoneContato;
-    @Column(name = "email_contato", unique = true)
+    @Column(name = "telefone_contato", nullable = false)
+    private Long telefoneContato;
+    @Column(name = "email_contato", nullable = false)
     private String emailContato;
 
     public void setId(Long id) { this.id = id; }
@@ -35,11 +35,11 @@ public class Fornecedor {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCnpj() {
+    public Long getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
+    public void setCnpj(Long cnpj) {
         this.cnpj = cnpj;
     }
 
@@ -59,11 +59,11 @@ public class Fornecedor {
         this.endereco = endereco;
     }
 
-    public String getTelefoneContato() {
+    public Long getTelefoneContato() {
         return telefoneContato;
     }
 
-    public void setTelefoneContato(String telefoneContato) {
+    public void setTelefoneContato(Long telefoneContato) {
         this.telefoneContato = telefoneContato;
     }
 

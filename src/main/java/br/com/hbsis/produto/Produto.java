@@ -10,9 +10,9 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "cod_produto", unique = true, nullable = false, length = 100)
+    @Column(name = "cod_produto", unique = true, nullable = false, length = 10)
     private String codProduto;
-    @Column(name = "nome_produto", unique = true, nullable = false, length = 100)
+    @Column(name = "nome_produto", unique = true, nullable = false, length = 200)
     private String nomeProduto;
     @Column(name = "preco_produto", nullable = false)
     private double precoProduto;
@@ -23,6 +23,8 @@ public class Produto {
     private long unidadeCaixaProduto;
     @Column(name = "peso_unidade")
     private double pesoUnidade;
+    @Column(name = "unidade_medida_peso")
+    private String medidaPeso;
     @Column(name = "validade")
     private LocalDateTime validade;
 
@@ -76,6 +78,10 @@ public class Produto {
         this.pesoUnidade = pesoUnidade;
     }
 
+    public String getMedidaPeso() { return medidaPeso; }
+
+    public void setMedidaPeso(String medidaPeso) { this.medidaPeso = medidaPeso; }
+
     public LocalDateTime getValidade() {
         return validade;
     }
@@ -94,6 +100,7 @@ public class Produto {
                 ", Linha da categoria do produto='" + LinhaCategoria + '\'' +
                 ", Unidade por caixa='" + unidadeCaixaProduto + '\'' +
                 ", Peso do produto='" + pesoUnidade + '\'' +
+                ", Medida de peso do produto='" + medidaPeso + '\'' +
                 ", Validade do produto='" + validade + '\'' +
                 '}';
     }

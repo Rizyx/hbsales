@@ -9,25 +9,28 @@ public class VendaFornecedorDTO {
     private LocalDateTime dataFinal;
     private LocalDateTime diaRetirada;
     private long idFornecedor;
+    private String descricao;
 
     public VendaFornecedorDTO() {
     }
 
     public VendaFornecedorDTO(LocalDateTime dataInicio, LocalDateTime dataFinal,
-                                    LocalDateTime diaRetirada, long idFornecedor) {
+                                    LocalDateTime diaRetirada, long idFornecedor,String descricao) {
         this.dataInicio = dataInicio;
         this.dataFinal = dataFinal;
         this.diaRetirada = diaRetirada;
         this.idFornecedor = idFornecedor;
+        this.descricao = descricao;
     }
 
     public VendaFornecedorDTO(long id, LocalDateTime dataInicio,
-                              LocalDateTime dataFinal, LocalDateTime diaRetirada, long idFornecedor) {
+                              LocalDateTime dataFinal, LocalDateTime diaRetirada, long idFornecedor,String descricao) {
         this.id = id;
         this.dataInicio = dataInicio;
         this.dataFinal = dataFinal;
         this.diaRetirada = diaRetirada;
         this.idFornecedor = idFornecedor;
+        this.descricao = descricao;
     }
     public static VendaFornecedorDTO of(VendaFornecedor vendaFornecedor) {
         return new VendaFornecedorDTO(
@@ -35,7 +38,8 @@ public class VendaFornecedorDTO {
                 vendaFornecedor.getDataInicio(),
                 vendaFornecedor.getDataFinal(),
                 vendaFornecedor.getDiaRetirada(),
-                vendaFornecedor.getFornecedor().getId()
+                vendaFornecedor.getFornecedor().getId(),
+                vendaFornecedor.getDescricao()
         );
     }
 
@@ -59,6 +63,10 @@ public class VendaFornecedorDTO {
 
     public void setIdFornecedor(long idFornecedor) { this.idFornecedor = idFornecedor;}
 
+    public String getDescricao() { return descricao; }
+
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
     @Override
     public String toString() {
         return "VendaFornecedor{" +
@@ -67,6 +75,7 @@ public class VendaFornecedorDTO {
                 ", Data de final='" + dataFinal + '\'' +
                 ", Dia de retirada='" + diaRetirada + '\'' +
                 ", id vendaFornecedor='" + idFornecedor + '\'' +
+                ", descrição do produto='" + descricao + '\'' +
                 '}';
     }
 }

@@ -20,6 +20,8 @@ public class VendaFornecedor {
     @ManyToOne
     @JoinColumn(name="venda_fornecedor", referencedColumnName = "id")
     private Fornecedor fornecedor;
+    @Column(name = "descricao")
+    private String descricao;
 
     public Long getId() {
         return id;
@@ -61,6 +63,10 @@ public class VendaFornecedor {
         this.fornecedor = fornecedor;
     }
 
+    public String getDescricao() { return descricao; }
+
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
     @Override
     public String toString() {
         return "VendaFornecedor{" +
@@ -69,6 +75,7 @@ public class VendaFornecedor {
                 ", Data de final='" + dataFinal + '\'' +
                 ", Dia de retirada='" + diaRetirada + '\'' +
                 ", id vendaFornecedor='" + fornecedor + '\'' +
+                ", descrição do produto='" + descricao + '\'' +
                 '}';
     }
 }

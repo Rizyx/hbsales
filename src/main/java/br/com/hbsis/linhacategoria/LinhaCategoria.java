@@ -9,7 +9,7 @@ public class LinhaCategoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "cod_linha_categoria", unique = true, nullable = false, length = 100)
+    @Column(name = "cod_linha_categoria", unique = true, nullable = false, length = 10)
     private String codLinhaCategoria;
     @ManyToOne
     @JoinColumn(name = "categoria_linha",  referencedColumnName = "id")

@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -34,6 +36,12 @@ public class FornecedorRest {
     public List<Fornecedor> findFornecedor() {
         List<Fornecedor> fornecedors = fornecedorService.findAll();
         return fornecedors;
+    }
+
+    @PostMapping("/{id}/import_csv")
+    public void saveImportById(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws Exception{
+        LOGGER.info("Recebendo solicitação de persistência de Fornecedor...");
+        fornecedorService.saveImportById(id,file);
     }
 
     @PutMapping("/{id}")

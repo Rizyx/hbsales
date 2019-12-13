@@ -24,7 +24,7 @@ class VendaFornecedorServiceTest {
 
     @Test
     public void save() {
-        FornecedorDTO fornecedorDTO = new FornecedorDTO(1,"minha.RazaoSocial","meu.cnpj","Nome.NomeFantasia");
+        FornecedorDTO fornecedorDTO = new FornecedorDTO(1,"minha.RazaoSocial", (long) 1,"Nome.NomeFantasia");
 
         Fornecedor fornecedorMock = Mockito.mock(Fornecedor.class);
 
@@ -40,22 +40,9 @@ class VendaFornecedorServiceTest {
         Fornecedor createdFornecedor = argumentCaptor.getValue();
 
         assertTrue(StringUtils.isNoneEmpty(createdFornecedor.getRazaoSocial()), "Razao social não deve ser nulo");
-        assertTrue(StringUtils.isNoneEmpty(createdFornecedor.getCnpj()), "cnpj não deve ser nulo");
+        assertTrue(StringUtils.isNoneEmpty(String.valueOf(createdFornecedor.getCnpj())), "cnpj não deve ser nulo");
         assertTrue(StringUtils.isNoneEmpty(createdFornecedor.getNomeFantasia()), "nome fantasia não deve ser nulo");
 
-    }
-
-    @Test
-    public void findById() {
-        FornecedorDTO fornecedorDTO = new FornecedorDTO(1,"minha.RazaoSocial","meu.cnpj","Nome.NomeFantasia");
-
-        Fornecedor fornecedorMock = Mockito.mock(Fornecedor.class);
-        when(fornecedorMock.getId()).thenReturn(fornecedorDTO.getIdFornecedor());
-        when(this.iFornecedorRepository.findById(any())).thenReturn(java.util.Optional.of(fornecedorMock));
-        this.fornecedorService.save(fornecedorDTO);
-        verify(this.iFornecedorRepository, times(1)).save(this.argumentCaptor.capture());
-        Fornecedor createdFornecedor = argumentCaptor.getValue();
-        assertTrue(StringUtils.isNoneEmpty(String.valueOf(createdFornecedor.getId())), "id não deve ser nulo");
     }
 
     @Test

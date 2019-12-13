@@ -10,24 +10,26 @@ public class ProdutoDTO {
     private long linhaCategoria;
     private long unidadeCaixaProduto;
     private double pesoUnidade;
+    private String medidaPeso;
     private LocalDateTime validade;
 
     public ProdutoDTO() {
     }
 
-    public ProdutoDTO(String codProduto, String nomeProduto, double precoProduto,
-                      long linhaCategoria, long unidadeCaixaProduto, double pesoUnidade, LocalDateTime validade) {
+    public ProdutoDTO(String codProduto, String nomeProduto, double precoProduto, long linhaCategoria,
+                      long unidadeCaixaProduto, double pesoUnidade, String medidaPeso, LocalDateTime validade) {
         this.codProduto = codProduto;
         this.nomeProduto = nomeProduto;
         this.precoProduto = precoProduto;
         this.linhaCategoria = linhaCategoria;
         this.unidadeCaixaProduto = unidadeCaixaProduto;
         this.pesoUnidade = pesoUnidade;
+        this.medidaPeso = medidaPeso;
         this.validade = validade;
     }
 
     public ProdutoDTO(long id, String codProduto, String nomeProduto, double precoProduto,
-                      long linhaCategoria, long unidadeCaixaProduto, double pesoUnidade, LocalDateTime validade) {
+                      long linhaCategoria, long unidadeCaixaProduto, double pesoUnidade, String medidaPeso, LocalDateTime validade) {
         this.idProduto = id;
         this.codProduto = codProduto;
         this.nomeProduto = nomeProduto;
@@ -35,6 +37,7 @@ public class ProdutoDTO {
         this.linhaCategoria = linhaCategoria;
         this.unidadeCaixaProduto = unidadeCaixaProduto;
         this.pesoUnidade = pesoUnidade;
+        this.medidaPeso = medidaPeso;
         this.validade = validade;
     }
 
@@ -47,6 +50,7 @@ public class ProdutoDTO {
                 produto.getLinhaCategoria().getId(),
                 produto.getUnidadeCaixaProduto(),
                 produto.getPesoUnidade(),
+                produto.getMedidaPeso(),
                 produto.getValidade()
         );
     }
@@ -79,6 +83,10 @@ public class ProdutoDTO {
 
     public void setPesoUnidade(double pesoUnidade) { this.pesoUnidade = pesoUnidade; }
 
+    public String getMedidaPeso() { return medidaPeso; }
+
+    public void setMedidaPeso(String medidaPeso) { this.medidaPeso = medidaPeso; }
+
     public LocalDateTime getValidade() { return validade; }
 
     public void setValidade(LocalDateTime validade) { this.validade = validade; }
@@ -93,6 +101,7 @@ public class ProdutoDTO {
                 ", Linha da categoria do produto='" + linhaCategoria + '\'' +
                 ", Unidade por caixa='" + unidadeCaixaProduto + '\'' +
                 ", Peso do produto='" + pesoUnidade + '\'' +
+                ", Medida de peso do produto='" + medidaPeso + '\'' +
                 ", Validade do produto='" + validade + '\'' +
                 '}';
     }
