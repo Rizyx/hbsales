@@ -1,5 +1,7 @@
 package br.com.hbsis.fornecedor;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,81 +10,83 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "Razao_Social", nullable = false, length = 100)
-    private String Razao_Social;
-    @Column(name = "CNPJ", unique = true, nullable = false, length = 30)
-    private String CNPJ;
-    @Column(name = "Nome_Fantasia", nullable = false, length = 150)
-    private String Nome_Fantasia;
-    @Column(name = "Endereco", unique = true, length = 200)
-    private String Endereco;
-    @Column(name = "Telefone_contato", unique = true, length = 20)
-    private String Telefone_contato;
-    @Column(name = "Email_contato", unique = true, length = 120)
-    private String Email_contato;
+    @Column(name = "razao_Social", nullable = false)
+    private String razaoSocial;
+    @Column(name = "cnpj", unique = true, nullable = false)
+    private Long cnpj;
+    @Column(name = "nome_Fantasia", nullable = false)
+    private String nomeFantasia;
+    @Column(name = "endereco", nullable = false)
+    private String endereco;
+    @Column(name = "telefone_contato", nullable = false)
+    private Long telefoneContato;
+    @Column(name = "email_contato", nullable = false)
+    private String emailContato;
+
+    public void setId(Long id) { this.id = id; }
 
     public Long getId() {
         return id;
     }
 
-    public String getRazao_Social() {
-        return Razao_Social;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setRazao_Social(String razao_Social) {
-        this.Razao_Social = razao_Social;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
-    public String getCNPJ() {
-        return CNPJ;
+    public Long getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(Long cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getNome_Fantasia() {
-        return Nome_Fantasia;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setNome_Fantasia(String nome_Fantasia) {
-        this.Nome_Fantasia = nome_Fantasia;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getEndereco() {
-        return Endereco;
+        return endereco;
     }
 
     public void setEndereco(String endereco) {
-        Endereco = endereco;
+        this.endereco = endereco;
     }
 
-    public String getTelefone_contato() {
-        return Telefone_contato;
+    public Long getTelefoneContato() {
+        return telefoneContato;
     }
 
-    public void setTelefone_contato(String telefone_contato) {
-        this.Telefone_contato = telefone_contato;
+    public void setTelefoneContato(Long telefoneContato) {
+        this.telefoneContato = telefoneContato;
     }
 
-    public String getEmail_contato() {
-        return Email_contato;
+    public String getEmailContato() {
+        return emailContato;
     }
 
-    public void setEmail_contato(String email_contato) {
-        this.Email_contato = email_contato;
+    public void setEmailContato(String emailContato) {
+        this.emailContato = emailContato;
     }
 
     @Override
     public String toString() {
         return "Fornecedor{" +
                 "id=" + id +
-                ", Razao social='" + Razao_Social + '\'' +
-                ", CNPJ='" + CNPJ + '\'' +
-                ", Nome Fanstasia='" + Nome_Fantasia + '\'' +
-                ", Endereço='" + Endereco + '\'' +
-                ", Telefone de contato='" + Telefone_contato + '\'' +
-                ", E-mail de contato='" + Email_contato + '\'' +
+                ", Razao social='" + razaoSocial + '\'' +
+                ", CNPJ='" + cnpj + '\'' +
+                ", Nome Fanstasia='" + nomeFantasia + '\'' +
+                ", Endereço='" + endereco + '\'' +
+                ", Telefone de contato='" + telefoneContato + '\'' +
+                ", E-mail de contato='" + emailContato + '\'' +
                 '}';
     }
 }

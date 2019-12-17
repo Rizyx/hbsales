@@ -1,15 +1,18 @@
-package br.com.hbsis.produtos;
+package br.com.hbsis.produto;
 
+import br.com.hbsis.linhacategoria.LinhaCategoriaRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoRest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProdutoRest.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(LinhaCategoriaRest.class);
     private final ProdutoService produtoService;
 
     @Autowired
@@ -21,30 +24,46 @@ public class ProdutoRest {
     public ProdutoDTO save(@RequestBody ProdutoDTO produtoDTO) {
         LOGGER.info("Recebendo solicitação de persistência de Produto...");
         LOGGER.debug("Payaload: {}", produtoDTO);
-
         return this.produtoService.save(produtoDTO);
+    }
+
+    @PostMapping("/import_csv")
+    public void importCsv(@RequestParam("file") MultipartFile file) throws Exception {
+        produtoService.importCSV(file);
+    }
+    @PostMapping("/{id}/import_csv")
+    public void saveImportById(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws Exception{
+        LOGGER.info("Recebendo solicitação de persistência de Fornecedor...");
+        produtoService.saveImportById(id,file);
+    }
+
+    @GetMapping("/export_csv")
+    public void exportCSV(HttpServletResponse response) throws Exception {
+        produtoService.exportCSV(response);
     }
 
     @GetMapping("/{id}")
     public ProdutoDTO find(@PathVariable("id") Long id) {
-
         LOGGER.info("Recebendo find by ID... id: [{}]", id);
-
         return this.produtoService.findById(id);
+    }
+
+    @GetMapping("/todos")
+    public List<Produto> findAll() {
+        List<Produto> produtos = produtoService.findAll();
+        return produtos;
     }
 
     @PutMapping("/{id}")
     public ProdutoDTO udpate(@PathVariable("id") Long id, @RequestBody ProdutoDTO produtoDTO) {
         LOGGER.info("Recebendo Update para Produto de ID: {}", id);
         LOGGER.debug("Payload: {}", produtoDTO);
-
         return this.produtoService.update(produtoDTO, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
         LOGGER.info("Recebendo Delete para Produto de ID: {}", id);
-
         this.produtoService.delete(id);
     }
 }
