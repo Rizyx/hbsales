@@ -1,9 +1,7 @@
 package br.com.hbsis.linhacategoria;
 
 import br.com.hbsis.categoriaproduto.CategoriaProduto;
-import br.com.hbsis.categoriaproduto.CategoriaProdutoDTO;
 import br.com.hbsis.categoriaproduto.CategoriaProdutoService;
-import br.com.hbsis.categoriaproduto.ICategoriaProdutoRepository;
 import com.opencsv.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,12 +23,10 @@ public class LinhaCategoriaService {
 
     private final ILinhaCategoriaRepository iLinhaCategoriaRepository;
     private final CategoriaProdutoService categoriaProdutoService;
-    private final ICategoriaProdutoRepository iCategoriaProdutoRepository;
 
-    public LinhaCategoriaService(ILinhaCategoriaRepository iLinhaCategoriaRepository, CategoriaProdutoService categoriaProdutoService, ICategoriaProdutoRepository  iCategoriaProdutoRepository) {
+    public LinhaCategoriaService(ILinhaCategoriaRepository iLinhaCategoriaRepository, CategoriaProdutoService categoriaProdutoService) {
         this.iLinhaCategoriaRepository = iLinhaCategoriaRepository;
         this.categoriaProdutoService = categoriaProdutoService;
-        this.iCategoriaProdutoRepository = iCategoriaProdutoRepository;
     }
 
     public List<LinhaCategoria> findAll() {
@@ -38,10 +34,9 @@ public class LinhaCategoriaService {
         return linhaCategorias;
     }
 
-    public  List<LinhaCategoria> saveAll(List<LinhaCategoria> linhaCategorias)  {
+    public List<LinhaCategoria> saveAll(List<LinhaCategoria> linhaCategorias) {
         return iLinhaCategoriaRepository.saveAll(linhaCategorias);
     }
-
 
 
     public LinhaCategoriaDTO save(LinhaCategoriaDTO linhaCategoriaDTO) {
@@ -55,19 +50,20 @@ public class LinhaCategoriaService {
         String codigo = "";
         LinhaCategoria linhaCategoria = new LinhaCategoria();
         linhaCategoria.setCodLinhaCategoria(linhaCategoriaDTO.getCodLinhaCategoria().toUpperCase());
-        if(linhaCategoria.getCodLinhaCategoria().equals(null)){
+        if (linhaCategoria.getCodLinhaCategoria().equals(null)) {
             throw new IllegalArgumentException("Codigo de linha nao pode ser nulo");
-        }else
-            while (linhaCategoria.getCodLinhaCategoria().length() < 10){
-            codigo += "0";
-            linhaCategoria.setCodLinhaCategoria(codigo + linhaCategoriaDTO.getCodLinhaCategoria().toUpperCase());
+        } else
+            while (linhaCategoria.getCodLinhaCategoria().length() < 10) {
+                codigo += "0";
+                linhaCategoria.setCodLinhaCategoria(codigo + linhaCategoriaDTO.getCodLinhaCategoria().toUpperCase());
             }
-            if(linhaCategoria.getCodLinhaCategoria().length() > 10){
+        if (linhaCategoria.getCodLinhaCategoria().length() > 10) {
             throw new IllegalArgumentException("codigo nao pode ter mais que dez digitos otario");
-        }else{
-        linhaCategoria.setCategoriaProduto(findCategoriaProdutoid);
-        linhaCategoria.setNomeLinha(linhaCategoriaDTO.getNomeLinha());
-        linhaCategoria = this.iLinhaCategoriaRepository.save(linhaCategoria);}
+        } else {
+            linhaCategoria.setCategoriaProduto(findCategoriaProdutoid);
+            linhaCategoria.setNomeLinha(linhaCategoriaDTO.getNomeLinha());
+            linhaCategoria = this.iLinhaCategoriaRepository.save(linhaCategoria);
+        }
         return linhaCategoriaDTO.of(linhaCategoria);
     }
 
@@ -91,6 +87,7 @@ public class LinhaCategoriaService {
         }
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
     }
+
     public LinhaCategoria findByCodLinhaCategoria(String codLinhaCategoria) {
         Optional<LinhaCategoria> linhaCategoriaOptional = this.iLinhaCategoriaRepository.findByCodLinhaCategoria(codLinhaCategoria);
         if (linhaCategoriaOptional.isPresent()) {
@@ -119,19 +116,20 @@ public class LinhaCategoriaService {
             LOGGER.debug("Linha da Categoria Existente: {}", linhaProdutoExistente);
             String codigo = "";
             linhaProdutoExistente.setCodLinhaCategoria(linhaCategoriaDTO.getCodLinhaCategoria());
-            if(linhaProdutoExistente.getCodLinhaCategoria().equals(null)){
+            if (linhaProdutoExistente.getCodLinhaCategoria() == null) {
                 throw new IllegalArgumentException("Codigo de linha nao pode ser nulo");
-            }else
-                while (linhaProdutoExistente.getCodLinhaCategoria().length() < 10){
+            } else
+                while (linhaProdutoExistente.getCodLinhaCategoria().length() < 10) {
                     codigo += "0";
                     linhaProdutoExistente.setCodLinhaCategoria(codigo + linhaCategoriaDTO.getCodLinhaCategoria().toUpperCase());
                 }
-            if(linhaProdutoExistente.getCodLinhaCategoria().length() > 10){
+            if (linhaProdutoExistente.getCodLinhaCategoria().length() > 10) {
                 throw new IllegalArgumentException("codigo nao pode ter mais que dez digitos otario");
-            }else{
-            linhaProdutoExistente.setCategoriaProduto(findCategoriaProdutoid);
-            linhaProdutoExistente.setNomeLinha(linhaCategoriaDTO.getNomeLinha());
-            linhaProdutoExistente = this.iLinhaCategoriaRepository.save(linhaProdutoExistente);}
+            } else {
+                linhaProdutoExistente.setCategoriaProduto(findCategoriaProdutoid);
+                linhaProdutoExistente.setNomeLinha(linhaCategoriaDTO.getNomeLinha());
+                linhaProdutoExistente = this.iLinhaCategoriaRepository.save(linhaProdutoExistente);
+            }
             return LinhaCategoriaDTO.of(linhaProdutoExistente);
         }
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
@@ -142,7 +140,12 @@ public class LinhaCategoriaService {
         this.iLinhaCategoriaRepository.deleteById(id);
     }
 
-    public void exportCSV(HttpServletResponse response) throws IOException{
+    public Optional<LinhaCategoria> BDuse(String codLinhaCat) {
+        Optional<LinhaCategoria> findByCodLinhaCategoria = this.iLinhaCategoriaRepository.findByCodLinhaCategoria(codLinhaCat);
+        return findByCodLinhaCategoria;
+    }
+
+    public void exportCSV(HttpServletResponse response) throws IOException {
         String filename = "ArquivoDeExpotação.csv";
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
@@ -155,8 +158,8 @@ public class LinhaCategoriaService {
                 .build();
         for (LinhaCategoria linhaCategoria : iLinhaCategoriaRepository.findAll()) {
             Writer.writeNext(new String[]
-                    {linhaCategoria.getCodLinhaCategoria(),linhaCategoria.getNomeLinha(),
-                            linhaCategoria.getCategoriaProduto().getCodCategoria(),linhaCategoria.getCategoriaProduto().getNomeCategoria()});
+                    {linhaCategoria.getCodLinhaCategoria(), linhaCategoria.getNomeLinha(),
+                            linhaCategoria.getCategoriaProduto().getCodCategoria(), linhaCategoria.getCategoriaProduto().getNomeCategoria()});
         }
     }
 
@@ -172,19 +175,16 @@ public class LinhaCategoriaService {
                 CategoriaProduto categoriaProduto;
                 linhaCategoria.setCodLinhaCategoria((rowTemp[0]));
                 Optional<LinhaCategoria> linhaCategoriaOptional = this.iLinhaCategoriaRepository.findByCodLinhaCategoria(linhaCategoria.getCodLinhaCategoria());
-                if(linhaCategoriaOptional.isPresent()){
+                if (linhaCategoriaOptional.isPresent()) {
 
-                }else{
-                linhaCategoria.setNomeLinha(rowTemp[1]);
-                categoriaProduto = categoriaProdutoService.findByCodCategoria((rowTemp[2]));
-                categoriaProduto.setId(categoriaProduto.getId());
-                Optional<CategoriaProduto> categoriaProdutoOptional = this.iCategoriaProdutoRepository.findByCodCategoria(categoriaProduto.getCodCategoria());
-                if(categoriaProdutoOptional.isPresent()){
-
-                }else{
-                linhaCategoria.setCategoriaProduto(categoriaProduto);
-                linhaCategorias.add(linhaCategoria);
-                return iLinhaCategoriaRepository.saveAll(linhaCategorias);}}
+                } else {
+                    linhaCategoria.setNomeLinha(rowTemp[1]);
+                    categoriaProduto = categoriaProdutoService.findByCodCategoria((rowTemp[2]));
+                    categoriaProduto.setId(categoriaProduto.getId());
+                    linhaCategoria.setCategoriaProduto(categoriaProduto);
+                    linhaCategorias.add(linhaCategoria);
+                    return iLinhaCategoriaRepository.saveAll(linhaCategorias);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

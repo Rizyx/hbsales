@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ICategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Long> {
+interface ICategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Long> {
 
     Optional<CategoriaProduto> findByCodCategoria(String codCategoria);
 }

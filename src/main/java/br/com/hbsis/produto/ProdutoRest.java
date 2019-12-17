@@ -31,6 +31,11 @@ public class ProdutoRest {
     public void importCsv(@RequestParam("file") MultipartFile file) throws Exception {
         produtoService.importCSV(file);
     }
+    @PostMapping("/{id}/import_csv")
+    public void saveImportById(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws Exception{
+        LOGGER.info("Recebendo solicitação de persistência de Fornecedor...");
+        produtoService.saveImportById(id,file);
+    }
 
     @GetMapping("/export_csv")
     public void exportCSV(HttpServletResponse response) throws Exception {

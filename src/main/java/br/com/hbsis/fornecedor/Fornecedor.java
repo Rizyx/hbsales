@@ -1,5 +1,7 @@
 package br.com.hbsis.fornecedor;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity

@@ -1,9 +1,7 @@
 package br.com.hbsis.categoriaproduto;
 
 import br.com.hbsis.fornecedor.Fornecedor;
-import br.com.hbsis.fornecedor.FornecedorDTO;
 import br.com.hbsis.fornecedor.FornecedorService;
-import br.com.hbsis.fornecedor.IFornecedorRepository;
 import com.opencsv.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -22,12 +20,10 @@ public class CategoriaProdutoService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoriaProdutoService.class);
     private final ICategoriaProdutoRepository iCategoriaProdutoRepository;
     private final FornecedorService fornecedorService;
-    private final IFornecedorRepository iFornecedorRepository;
 
-    public CategoriaProdutoService(ICategoriaProdutoRepository iCategoriaProdutoRepository, FornecedorService fornecedorService, IFornecedorRepository iFornecedorRepository) {
+    public CategoriaProdutoService(ICategoriaProdutoRepository iCategoriaProdutoRepository, FornecedorService fornecedorService) {
         this.iCategoriaProdutoRepository = iCategoriaProdutoRepository;
         this.fornecedorService = fornecedorService;
-        this.iFornecedorRepository = iFornecedorRepository;
     }
 
     public  List<CategoriaProduto> findAll() {
@@ -66,20 +62,17 @@ public class CategoriaProdutoService {
                 String[] rowTemp = row[0].replaceAll("[-\"./]", "").split(";");
                 try {
                     CategoriaProduto categoriaProduto = new CategoriaProduto();
-                    Fornecedor fornecedor = new Fornecedor();
-                    FornecedorDTO fornecedorDTO;
+                    Fornecedor fornecedor;
                     categoriaProduto.setCodCategoria((rowTemp[0]));
                     Optional<CategoriaProduto> categoriaProdutoOptional = this.iCategoriaProdutoRepository.findByCodCategoria(categoriaProduto.getCodCategoria());
                     if(categoriaProdutoOptional.isPresent()){
-
                     }else{
                     categoriaProduto.setNomeCategoria(rowTemp[1]);
-                    fornecedorDTO = fornecedorService.findByCnpj(Long.parseLong(rowTemp[3]));
-                    rowTemp[2] = String.valueOf(fornecedorDTO.getIdFornecedor());
+                    fornecedor = fornecedorService.findByCnpj(Long.parseLong(rowTemp[3]));
+                    rowTemp[2] = String.valueOf(fornecedor.getId());
                     fornecedor.setId(Long.parseLong(rowTemp[2]));
-                    Optional<Fornecedor> fornecedorOptional = this.iFornecedorRepository.findByCnpj(fornecedor.getCnpj());
+                    Optional<Fornecedor> fornecedorOptional = Optional.ofNullable(this.fornecedorService.findByCnpj(fornecedor.getCnpj()));
                     if(fornecedorOptional.isPresent()){
-
                     }else{
                     categoriaProduto.setFornecedor(fornecedor);
                     categoriaProdutos.add(categoriaProduto);
@@ -98,19 +91,16 @@ public class CategoriaProdutoService {
 
         LOGGER.info("Salvando Categoria do produto");
         LOGGER.debug("Categoria do Produto: {}", categoriaProdutoDTO);
-
+        String codigo="";
         CategoriaProduto categoriaProduto = new CategoriaProduto();
             categoriaProduto.setFornecedor(findFornecedorid);
             categoriaProduto.setNomeCategoria(categoriaProdutoDTO.getNomeCategoria());
-            categoriaProduto.setCodCategoria("CAT" + categoriaProduto.getFornecedor().getCnpj().toString().substring(10,14) + categoriaProdutoDTO.getCodCategoria());
-        if(categoriaProduto.getCodCategoria().length() > 10) {
+            categoriaProduto.setCodCategoria("CAT" + categoriaProduto.getFornecedor().getCnpj().toString().substring(10,14) + categoriaProdutoDTO.getCodCategoria().toUpperCase());
+            while (categoriaProduto.getCodCategoria().length() < 10) {
+            codigo += "0";
+                categoriaProduto.setCodCategoria("CAT" + categoriaProduto.getFornecedor().getCnpj().toString().substring(10,14) + codigo + categoriaProdutoDTO.getCodCategoria().toUpperCase());
+        } if(categoriaProduto.getCodCategoria().length() > 10) {
             throw new IllegalArgumentException("Codigo invalido digite novamente");
-        }else if(categoriaProduto.getCodCategoria().length() == 9 ){
-            categoriaProduto.setCodCategoria("CAT" + categoriaProduto.getFornecedor().getCnpj().toString().substring(10,14) + "0" + categoriaProdutoDTO.getCodCategoria());
-            categoriaProduto = this.iCategoriaProdutoRepository.save(categoriaProduto);
-        }else if(categoriaProduto.getCodCategoria().length() == 8 ){
-            categoriaProduto.setCodCategoria("CAT" + categoriaProduto.getFornecedor().getCnpj().toString().substring(10,14) + "00" + categoriaProdutoDTO.getCodCategoria());
-            categoriaProduto = this.iCategoriaProdutoRepository.save(categoriaProduto);
         }else{
         categoriaProduto = this.iCategoriaProdutoRepository.save(categoriaProduto);
         }
@@ -128,7 +118,6 @@ public class CategoriaProdutoService {
         if (StringUtils.isEmpty(categoriaProdutoDTO.getNomeCategoria())) {
             throw new IllegalArgumentException("Nome da categoria não deve ser nula/vazia");
         }
-
     }
 
     public CategoriaProdutoDTO findById(Long id) {
@@ -138,6 +127,7 @@ public class CategoriaProdutoService {
         }
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
     }
+
     public CategoriaProduto findByCodCategoria(String codCategoria) {
         Optional<CategoriaProduto> categoriaProdutoOptional = this.iCategoriaProdutoRepository.findByCodCategoria(codCategoria);
         if (categoriaProdutoOptional.isPresent()) {
@@ -145,12 +135,18 @@ public class CategoriaProdutoService {
         }
         throw new IllegalArgumentException(String.format("cnpj %s não existe", codCategoria));
     }
+
     public CategoriaProduto findCategoriaProdutoById(long id) {
         Optional<CategoriaProduto> categoriaProdutoOptional = this.iCategoriaProdutoRepository.findById(id);
         if (categoriaProdutoOptional.isPresent()) {
             return categoriaProdutoOptional.get();
         }
         throw new IllegalArgumentException(String.format("ID %s não existe", id));
+    }
+
+    public Optional<CategoriaProduto> bDuse (String codCat) {
+        Optional<CategoriaProduto> findByCodCat = this.iCategoriaProdutoRepository.findByCodCategoria(codCat);
+        return findByCodCat;
     }
 
     public CategoriaProdutoDTO update(CategoriaProdutoDTO categoriaProdutoDTO, Long id) {
@@ -162,26 +158,22 @@ public class CategoriaProdutoService {
             LOGGER.info("Atualizando Categoria do produto... id: [{}]", categoriaProdutoExistente.getId());
             LOGGER.debug("Payload: {}", categoriaProdutoDTO);
             LOGGER.debug("Categoria do Produto Existente: {}", categoriaProdutoExistente);
-
+            String codigo = "";
             categoriaProdutoExistente.setFornecedor(findFornecedorid);
             categoriaProdutoExistente.setNomeCategoria(categoriaProdutoDTO.getNomeCategoria());
-            categoriaProdutoExistente.setCodCategoria("CAT" + categoriaProdutoExistente.getFornecedor().getCnpj().toString().toUpperCase().substring(10,14) + categoriaProdutoDTO.getCodCategoria());
-            if(categoriaProdutoExistente.getCodCategoria().length() > 10) {
-                throw new IllegalArgumentException("Codigo invalido digite novamente");
-            }else if(categoriaProdutoExistente.getCodCategoria().length() == 9 ){
-                categoriaProdutoExistente.setCodCategoria("CAT" + categoriaProdutoExistente.getFornecedor().getCnpj().toString().substring(10,13) + "0" + categoriaProdutoDTO.getCodCategoria());
-            }else if(categoriaProdutoExistente.getCodCategoria().length() == 8 ) {
-                categoriaProdutoExistente.setCodCategoria("CAT" + categoriaProdutoExistente.getFornecedor().getCnpj().toString().substring(10, 13) + "00" + categoriaProdutoDTO.getCodCategoria());
-                return CategoriaProdutoDTO.of(categoriaProdutoExistente);
-            }else{
-                return CategoriaProdutoDTO.of(categoriaProdutoExistente);
+            categoriaProdutoExistente.setCodCategoria("CAT" + categoriaProdutoExistente.getFornecedor().getCnpj().toString().toUpperCase().substring(10, 14) + categoriaProdutoDTO.getCodCategoria().toUpperCase());
+            while (categoriaProdutoExistente.getCodCategoria().length() < 10) {
+                codigo += "0";
+                categoriaProdutoExistente.setCodCategoria("CAT" + categoriaProdutoExistente.getFornecedor().getCnpj().toString().substring(10, 14) + codigo + categoriaProdutoDTO.getCodCategoria().toUpperCase());
+                if (categoriaProdutoExistente.getCodCategoria().length() > 10) {
+                    throw new IllegalArgumentException("Codigo invalido digite novamente");
+                } else {
+                    return CategoriaProdutoDTO.of(categoriaProdutoExistente);
                 }
-            throw new IllegalArgumentException(String.format("ID %s não existe", id));
+            }
         }
         return categoriaProdutoDTO;
-      }
-
-
+    }
     public void delete(Long id) {
         LOGGER.info("Executando delete para Categoria do Produto de ID: [{}]", id);
         this.iCategoriaProdutoRepository.deleteById(id);

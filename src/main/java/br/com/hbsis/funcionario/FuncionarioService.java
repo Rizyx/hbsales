@@ -32,12 +32,12 @@ public class FuncionarioService {
     }
 
     private void validate(FuncionarioDTO funcionarioDTO) {
-        LOGGER.info("Validando Fornecedor");
+        LOGGER.info("Validando Funcionario");
         if (funcionarioDTO == null) {
             throw new IllegalArgumentException("FuncionarioDTO não deve ser nulo");
         }
         if (StringUtils.isEmpty(funcionarioDTO.getNomeFuncionario())) {
-            throw new IllegalArgumentException("Nome do funcionario não deve ser nula/vazia");
+            throw new IllegalArgumentException("Nome do Funcionario não deve ser nula/vazia");
         }
     }
 

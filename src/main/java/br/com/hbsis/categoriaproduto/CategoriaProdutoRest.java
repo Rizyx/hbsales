@@ -39,8 +39,7 @@ public class CategoriaProdutoRest {
 
     @GetMapping("/todos")
     public List<CategoriaProduto> findCategoriaProduto() {
-        List<CategoriaProduto> categoriaProdutos = categoriaProdutoService.findAll();
-        return categoriaProdutos;
+        return categoriaProdutoService.findAll();
     }
 
     @GetMapping("/{id}")

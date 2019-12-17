@@ -8,10 +8,12 @@ public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome_funcionario", nullable = false)
+    @Column(name = "nome_funcionario")
     private String nomeFuncionario;
-    @Column(name = "email_funcionario", unique = true)
+    @Column(name = "email_funcionario")
     private String emailFuncionario;
+    @Column(name = "nome")
+    private String nome;
 
     public Long getId() {
         return id;
@@ -37,12 +39,17 @@ public class Funcionario {
         this.emailFuncionario = emailFuncionario;
     }
 
+    public String getNome() { return nome; }
+
+    public void setNome(String nome) { this.nome = nome; }
+
     @Override
     public String toString() {
         return "Funcionario{" +
                 "id=" + id +
                 ", Nome do funcionario='" + nomeFuncionario + '\'' +
                 ", Email do funcionario='" + emailFuncionario + '\''+
+                ", Nome do funcionario='" + nome + '\''+
                 '}';
     }
 }

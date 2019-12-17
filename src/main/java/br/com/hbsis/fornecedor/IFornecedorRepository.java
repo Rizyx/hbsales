@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IFornecedorRepository extends JpaRepository<Fornecedor, Long> {
+interface IFornecedorRepository extends JpaRepository<Fornecedor, Long> {
   Optional<Fornecedor> findByCnpj(Long cnpj);
 }

@@ -38,12 +38,6 @@ public class FornecedorRest {
         return fornecedors;
     }
 
-    @PostMapping("/{id}/import_csv")
-    public void saveImportById(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws Exception{
-        LOGGER.info("Recebendo solicitação de persistência de Fornecedor...");
-        fornecedorService.saveImportById(id,file);
-    }
-
     @PutMapping("/{id}")
     public FornecedorDTO udpate(@PathVariable("id") Long id, @RequestBody FornecedorDTO fornecedorDTO) {
         LOGGER.info("Recebendo Update para Fornecedor de ID: {}", id);
